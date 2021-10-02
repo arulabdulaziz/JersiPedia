@@ -1,10 +1,12 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {HeaderMainApp} from '../../components';
 const Home = () => {
   return (
     <View>
-      <Text>Home</Text>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <HeaderMainApp />
+      </ScrollView>
     </View>
   );
 };

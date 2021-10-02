@@ -2,7 +2,7 @@ import React from 'react';
 import Svg, { Path } from 'react-native-svg';
 import { responsiveHeight, responsiveWidth } from '../../utils';
 
-const ilustrasi = () => {
+const Ilustration = () => {
   return (
     <Svg
       width={responsiveWidth(328)}
@@ -135,4 +135,4 @@ const ilustrasi = () => {
   );
 };
 
-export default ilustrasi;
+export default Ilustration;

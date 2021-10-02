@@ -15,7 +15,10 @@ import {BottomNavigation} from "../components"
 const MainApp = () => {
   return (
     <Tab.Navigator tabBar={props => <BottomNavigation {...props} />}>
-      <Tab.Screen component={Home} name="Home" options={{headerShown: false}} />
+      <Tab.Screen 
+       component={Home}
+       name="Home" 
+       options={{headerShown: false}} />
       <Tab.Screen
         component={ListJersey}
         name="ListJersey"

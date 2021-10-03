@@ -1,8 +1,8 @@
 import React from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import {HeaderMainApp, ImageSlider} from '../../components';
-import { ListLiga } from '../../components';
-import { fonts, colors } from '../../utils';
+import {ListLiga, ListJersey, Distance} from '../../components';
+import {fonts, colors, responsiveHeight} from '../../utils';
 const Home = () => {
   return (
     <View>
@@ -13,6 +13,11 @@ const Home = () => {
           <Text style={styles.label}>Pilih Liga</Text>
           <ListLiga />
         </View>
+        <View style={styles.chooseLiga}>
+          <Text style={styles.label}>Pilih Jersey Yang Anda Inginkan</Text>
+          <ListJersey />
+        </View>
+        <Distance height={+responsiveHeight(100)} />
       </ScrollView>
     </View>
   );

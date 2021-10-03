@@ -1,35 +1,35 @@
-import ChelseaDepan from './chelsea1.png';
-import ChelseaBelakang from './chelsea2.png';
-import DortmundDepan from './dortmund1.png';
-import DortmundBelakang from './dortmund2.png';
-import JuveDepan from './juve1.png';
-import JuveBelakang from './juve2.png';
-import LeicesterDepan from './leicester1.png';
-import LeicesterBelakang from './leicester2.png';
-import LiverpoolDepan from './liverpool1.png';
-import LiverpoolBelakang from './liverpool2.png';
-import MadridDepan from './madrid1.png';
-import MadridBelakang from './madrid2.png';
-import MilanDepan from './milan1.png';
-import MilanBelakang from './milan2.png';
-import MunchenDepan from './munchen1.png';
-import MunchenBelakang from './munchen2.png';
+import ChelseaFront from './chelsea1.png';
+import ChelseaBack from './chelsea2.png';
+import DortmundFront from './dortmund1.png';
+import DortmundBack from './dortmund2.png';
+import JuveFront from './juve1.png';
+import JuveBack from './juve2.png';
+import LeicesterFront from './leicester1.png';
+import LeicesterBack from './leicester2.png';
+import LiverpoolFront from './liverpool1.png';
+import LiverpoolBack from './liverpool2.png';
+import MadridFront from './madrid1.png';
+import MadridBack from './madrid2.png';
+import MilanFront from './milan1.png';
+import MilanBack from './milan2.png';
+import MunchenFront from './munchen1.png';
+import MunchenBack from './munchen2.png';
 
 export {
-  ChelseaDepan,
-  ChelseaBelakang,
-  DortmundBelakang,
-  DortmundDepan,
-  JuveBelakang,
-  JuveDepan,
-  LeicesterBelakang,
-  LeicesterDepan,
-  LiverpoolBelakang,
-  LiverpoolDepan,
-  MadridBelakang,
-  MadridDepan,
-  MilanBelakang,
-  MilanDepan,
-  MunchenDepan,
-  MunchenBelakang,
+  ChelseaFront,
+  ChelseaBack,
+  DortmundBack,
+  DortmundFront,
+  JuveBack,
+  JuveFront,
+  LeicesterBack,
+  LeicesterFront,
+  LiverpoolBack,
+  LiverpoolFront,
+  MadridBack,
+  MadridFront,
+  MilanBack,
+  MilanFront,
+  MunchenFront,
+  MunchenBack,
 };

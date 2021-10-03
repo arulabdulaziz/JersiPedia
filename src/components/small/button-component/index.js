@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {IconChart} from '../../../assets';
+import TextOnly from './textOnly';
 const ButtonComponent = props => {
   const {onPress, padding, totalChart, type, icon} = props;
   const Icon = () => {
@@ -11,6 +12,9 @@ const ButtonComponent = props => {
         return <IconChart />;
     }
   };
+  if (type == 'text') {
+    return <TextOnly {...props} />;
+  }
   return (
     <TouchableOpacity
       onPress={onPress}

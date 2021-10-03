@@ -14,7 +14,9 @@ const Home = () => {
           <ListLiga />
         </View>
         <View style={styles.chooseLiga}>
-          <Text style={styles.label}>Pilih Jersey Yang Anda Inginkan</Text>
+          <Text style={styles.label}>
+            Pilih <Text style={styles.boldLabel}>Jersey</Text> Yang Anda Inginkan
+          </Text>
           <ListJersey />
         </View>
         <Distance height={+responsiveHeight(100)} />
@@ -33,5 +35,9 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 18,
     fontFamily: fonts.primary.regular,
+  },
+  boldLabel: {
+    fontSize: 18,
+    fontFamily: fonts.primary.bold,
   },
 });

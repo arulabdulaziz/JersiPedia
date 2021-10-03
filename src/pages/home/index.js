@@ -1,11 +1,18 @@
 import React from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
-import {HeaderMainApp} from '../../components';
+import {HeaderMainApp, ImageSlider} from '../../components';
+import { ListLiga } from '../../components';
+import { fonts, colors } from '../../utils';
 const Home = () => {
   return (
     <View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <HeaderMainApp />
+        <ImageSlider />
+        <View style={styles.chooseLiga}>
+          <Text style={styles.label}>Pilih Liga</Text>
+          <ListLiga />
+        </View>
       </ScrollView>
     </View>
   );
@@ -13,4 +20,13 @@ const Home = () => {
 
 export default Home;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  chooseLiga: {
+    marginHorizontal: 30,
+    marginTop: 10,
+  },
+  label: {
+    fontSize: 18,
+    fontFamily: fonts.primary.regular,
+  },
+});

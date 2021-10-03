@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {IconChart} from '../../../assets';
-import TextOnly from './textOnly';
+import TextOnly from './TextOnly';
 const ButtonComponent = props => {
   const {onPress, padding, totalChart, type, icon} = props;
   const Icon = () => {

@@ -5,7 +5,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
   Home,
   Splash,
-  ListJersey,
+  ListJerseyPage,
   Profile,
 } from '../pages';
 
@@ -20,7 +20,7 @@ const MainApp = () => {
        name="Home" 
        options={{headerShown: false}} />
       <Tab.Screen
-        component={ListJersey}
+        component={ListJerseyPage}
         name="ListJersey"
         options={{title: 'Jersey', headerShown: false}}
       />

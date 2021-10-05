@@ -5,6 +5,7 @@ import CardJersey from './card-jersey';
 import CardMenu from './card-menu';
 import Input from './input';
 import Picker from './picker';
+import CardChart from './card-chart';
 export {
   Distance,
   ButtonComponent,
@@ -13,4 +14,5 @@ export {
   CardMenu,
   Input,
   Picker,
+  CardChart,
 };

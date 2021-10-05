@@ -6,6 +6,7 @@ import ListLiga from './list-liga';
 import ListJersey from './list-jersey';
 import ListMenu from './ListMenu';
 import JerseySlider from './jersey-slider';
+import ListChart from './list-chart';
 export {
   BottomNavigation,
   TabItem,
@@ -15,4 +16,5 @@ export {
   ListJersey,
   ListMenu,
   JerseySlider,
+  ListChart,
 };

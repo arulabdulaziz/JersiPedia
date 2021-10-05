@@ -20,7 +20,7 @@ export default ListJersey;
 
 const styles = StyleSheet.create({
   container: {
-    matginTop: 1,
+    marginTop: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     flexWrap: 'wrap',

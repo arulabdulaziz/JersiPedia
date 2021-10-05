@@ -1,14 +1,15 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+import {ListChart} from '../../components';
+import {dummyOrders} from '../../data';
+const Chart = props => {
+  return (
+    <View>
+      <ListChart {...props} charts={dummyOrders} />
+    </View>
+  );
+};
 
-const Chart = (props) => {
-    return (
-        <View>
-            <Text>Keranjang</Text>
-        </View>
-    )
-}
+export default Chart;
 
-export default Chart
-
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import {IconChart} from '../../../assets';
+import {IconChart, IconBack} from '../../../assets';
+import TextIcon from './TextIcon';
 import TextOnly from './TextOnly';
 const ButtonComponent = props => {
   const {onPress, padding, totalChart, type, icon} = props;
@@ -8,12 +9,16 @@ const ButtonComponent = props => {
     switch (icon) {
       case 'chart':
         return <IconChart />;
+      case 'arrow-left':
+        return <IconBack />;
       default:
         return <IconChart />;
     }
   };
   if (type == 'text') {
     return <TextOnly {...props} />;
+  } else if (type == 'text-icon') {
+    return <TextIcon {...props} />;
   }
   return (
     <TouchableOpacity

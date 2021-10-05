@@ -3,7 +3,7 @@ import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import {HeaderMainApp} from '../../components';
 import {ListLiga, ListJersey, Distance} from '../../components';
 import {fonts, colors, responsiveHeight} from '../../utils';
-const ListJerseyPage = () => {
+const ListJerseyPage = (props) => {
   return (
     <View style={styles.page}>
       <HeaderMainApp />
@@ -16,7 +16,7 @@ const ListJerseyPage = () => {
             Pilih <Text style={styles.boldLabel}>Jersey</Text> Yang Anda
             Inginkan
           </Text>
-          <ListJersey />
+          <ListJersey {...props}/>
         </View>
         <Distance height={+responsiveHeight(100)} />
       </ScrollView>

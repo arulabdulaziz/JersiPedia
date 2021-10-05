@@ -4,12 +4,13 @@ import {HeaderMainApp, ImageSlider} from '../../components';
 import {ListLiga, ListJersey, Distance} from '../../components';
 import {fonts, colors, responsiveHeight} from '../../utils';
 import {ButtonComponent} from '../../components';
-const Home = () => {
+import {Slider1, Slider2} from '../../assets';
+const Home = props => {
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <HeaderMainApp />
-        <ImageSlider />
+        <ImageSlider image={[Slider1, Slider2]} />
         <View style={styles.chooseLiga}>
           <Text style={styles.label}>Pilih Liga</Text>
           <ListLiga />
@@ -19,8 +20,8 @@ const Home = () => {
             Pilih <Text style={styles.boldLabel}>Jersey</Text> Yang Anda
             Inginkan
           </Text>
-          <ListJersey />
-          <ButtonComponent type="text" padding={7} title="Lihat Semua" />
+          <ListJersey {...props} />
+          <ButtonComponent type="text" padding={7} title="Lihat Semua" onPress={()=> props.navigation.navigate("ListJersey")}/>
         </View>
         <Distance height={+responsiveHeight(130)} />
       </ScrollView>

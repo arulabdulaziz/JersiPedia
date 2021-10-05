@@ -5,6 +5,7 @@ import ImageSlider from './image-slider';
 import ListLiga from './list-liga';
 import ListJersey from './list-jersey';
 import ListMenu from './ListMenu';
+import JerseySlider from './jersey-slider';
 export {
   BottomNavigation,
   TabItem,
@@ -13,4 +14,5 @@ export {
   ListLiga,
   ListJersey,
   ListMenu,
+  JerseySlider,
 };

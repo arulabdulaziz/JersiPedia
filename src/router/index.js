@@ -7,6 +7,7 @@ import {
   Splash,
   ListJerseyPage,
   Profile,
+  JerseyDetail
 } from '../pages';
 
 const Stack = createNativeStackNavigator();
@@ -34,19 +35,24 @@ const MainApp = () => {
 }
 const Router = () => {
     return (
-        <Stack.Navigator initialRouteName="Splash">
-          <Stack.Screen
-            component={Splash}
-            name="Splash"
-            options={{headerShown: false}}
-          />
+      <Stack.Navigator initialRouteName="Splash">
+        <Stack.Screen
+          component={Splash}
+          name="Splash"
+          options={{headerShown: false}}
+        />
 
-          <Stack.Screen
-            component={MainApp}
-            name="MainApp"
-            options={{headerShown: false}}
-          />
-        </Stack.Navigator>
+        <Stack.Screen
+          component={MainApp}
+          name="MainApp"
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          component={JerseyDetail}
+          name="JerseyDetail"
+          options={{headerShown: false}}
+        />
+      </Stack.Navigator>
     );
 }
 

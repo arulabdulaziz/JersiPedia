@@ -3,4 +3,14 @@ import ButtonComponent from './button-component';
 import CardLiga from './card-liga';
 import CardJersey from './card-jersey';
 import CardMenu from './card-menu';
-export {Distance, ButtonComponent, CardLiga, CardJersey, CardMenu};
+import Input from './input';
+import Picker from './picker';
+export {
+  Distance,
+  ButtonComponent,
+  CardLiga,
+  CardJersey,
+  CardMenu,
+  Input,
+  Picker,
+};

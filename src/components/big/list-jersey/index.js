@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, FlatList} from 'react-native';
 import {dummyJerseys} from '../../../data';
 import {CardJersey} from '../..';
-const ListJersey = () => {
+const ListJersey = (props) => {
   const [jerseys, setJerseys] = useState([]);
   useEffect(() => {
     setJerseys(dummyJerseys);
@@ -10,7 +10,7 @@ const ListJersey = () => {
   return (
     <View style={styles.container}>
       {jerseys.map(jersey => (
-        <CardJersey key={jersey.id} jersey={jersey} />
+        <CardJersey key={jersey.id} jersey={jersey} onPress={() => props.navigation.navigate("JerseyDetail", {jersey})}/>
       ))}
     </View>
   );

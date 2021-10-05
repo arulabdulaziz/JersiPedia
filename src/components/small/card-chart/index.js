@@ -17,7 +17,7 @@ const CardChart = props => {
         fontSize={13}
         onPress={onPress}
       /> */}
-      <Text>Chart</Text>
+      <Text>{chart.product.name}</Text>
     </View>
   );
 };

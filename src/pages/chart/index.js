@@ -5,7 +5,11 @@ import {dummyOrders} from '../../data';
 const Chart = props => {
   return (
     <View>
-      <ListChart {...props} charts={dummyOrders} />
+      {dummyOrders
+        .filter(e => e.status == 'chart')
+        .map(chart => (
+          <ListChart {...props} chart={chart} key={chart.id} />
+        ))}
     </View>
   );
 };

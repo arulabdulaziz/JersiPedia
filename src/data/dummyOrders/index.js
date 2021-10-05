@@ -16,7 +16,7 @@ import {
     {
       id: 1,
       date: 'Jumat, 18 September 2020',
-      status: 'keranjang',
+      status: 'chart',
       total_price: 500000,
       weight: 1,
       orders: [
@@ -69,7 +69,7 @@ import {
     {
       id: 2,
       date: 'Sabtu, 19 September 2020',
-      status: 'lunas',
+      status: 'paid-off',
       total_price: 375000,
       weight: 0.75,
       orders: [

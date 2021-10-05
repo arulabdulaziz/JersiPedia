@@ -4,7 +4,7 @@ import {colors, responsiveHeight, fonts} from '../../../utils';
 import {IconSearch} from '../../../assets';
 import { Distance } from '../../small';
 import {ButtonComponent} from "../../small"
-const HeaderMainApp = () => {
+const HeaderMainApp = ({navigation}) => {
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
@@ -13,7 +13,7 @@ const HeaderMainApp = () => {
           <TextInput style={styles.input} placeholder="Cari Jersey. . ." />
         </View>
         <Distance width={10} />
-        <ButtonComponent padding={10} />
+        <ButtonComponent padding={10} onPress={() => navigation.navigate("Chart")}/>
       </View>
     </View>
   );

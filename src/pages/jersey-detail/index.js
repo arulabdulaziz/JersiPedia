@@ -79,9 +79,9 @@ const JerseyDetail = props => {
           <ButtonComponent
             type="text-icon"
             title="Masukkan Keranjang"
-            onPress={() => props.navigation.navigate('Home')}
             icon="chart-white"
             padding={responsiveHeight(17)}
+            onPress={() => props.navigation.navigate("Chart")}
           />
         </ScrollView>
       </View>

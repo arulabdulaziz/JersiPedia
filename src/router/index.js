@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React from 'react';
+import {View, Text} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {
@@ -7,19 +7,17 @@ import {
   Splash,
   ListJerseyPage,
   Profile,
-  JerseyDetail
+  JerseyDetail,
+  Chart,
 } from '../pages';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-import {BottomNavigation} from "../components"
+import {BottomNavigation} from '../components';
 const MainApp = () => {
   return (
     <Tab.Navigator tabBar={props => <BottomNavigation {...props} />}>
-      <Tab.Screen 
-       component={Home}
-       name="Home" 
-       options={{headerShown: false}} />
+      <Tab.Screen component={Home} name="Home" options={{headerShown: false}} />
       <Tab.Screen
         component={ListJerseyPage}
         name="ListJersey"
@@ -32,28 +30,33 @@ const MainApp = () => {
       />
     </Tab.Navigator>
   );
-}
+};
 const Router = () => {
-    return (
-      <Stack.Navigator initialRouteName="Splash">
-        <Stack.Screen
-          component={Splash}
-          name="Splash"
-          options={{headerShown: false}}
-        />
+  return (
+    <Stack.Navigator initialRouteName="Splash">
+      <Stack.Screen
+        component={Splash}
+        name="Splash"
+        options={{headerShown: false}}
+      />
 
-        <Stack.Screen
-          component={MainApp}
-          name="MainApp"
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          component={JerseyDetail}
-          name="JerseyDetail"
-          options={{headerShown: false}}
-        />
-      </Stack.Navigator>
-    );
-}
+      <Stack.Screen
+        component={MainApp}
+        name="MainApp"
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={JerseyDetail}
+        name="JerseyDetail"
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={Chart}
+        name="Chart"
+        options={{headerShown: true, title: 'Keranjang'}}
+      />
+    </Stack.Navigator>
+  );
+};
 
-export default Router
+export default Router;

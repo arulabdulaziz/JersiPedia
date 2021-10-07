@@ -8,7 +8,6 @@ const TextIcon = ({onPress, title, padding, fontSize, icon}) => {
     switch (icon) {
       case 'chart-white':
         return <IconChartWhite />;
-
       default:
         return <IconChartWhite />;
     }

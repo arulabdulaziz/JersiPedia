@@ -5,8 +5,8 @@ const ListChart = props => {
   const {chart} = props
   return (
     <View style={styles.container}>
-      {chart.orders.map(chart => (
-        <CardChart key={chart.id} chart={chart}/>
+      {chart.orders.map((chart, i) => (
+        <CardChart key={i} chart={chart}/>
       ))}
     </View>
   );

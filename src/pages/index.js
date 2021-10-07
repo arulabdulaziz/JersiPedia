@@ -6,6 +6,10 @@ import JerseyDetail from './jersey-detail';
 import Chart from './chart';
 import Checkout from './checkout';
 import EditProfile from './edit-profile';
+import ChangePassword from './change-password';
+import History from './history';
+import Login from './login';
+import { Register1, Register2 } from './register';
 export {
   Home,
   Splash,
@@ -15,4 +19,9 @@ export {
   Chart,
   Checkout,
   EditProfile,
+  ChangePassword,
+  History,
+  Login,
+  Register1,
+  Register2,
 };

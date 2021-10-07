@@ -11,6 +11,11 @@ import {
   Chart,
   Checkout,
   EditProfile,
+  ChangePassword,
+  History,
+  Login,
+  Register1,
+  Register2,
 } from '../pages';
 
 const Stack = createNativeStackNavigator();
@@ -66,6 +71,31 @@ const Router = () => {
         component={EditProfile}
         name="EditProfile"
         options={{headerShown: true, title: 'Edit Profile'}}
+      />
+      <Stack.Screen
+        component={ChangePassword}
+        name="ChangePassword"
+        options={{headerShown: true, title: 'Change Password'}}
+      />
+      <Stack.Screen
+        component={History}
+        name="History"
+        options={{headerShown: true, title: 'Riwayat Pemesanan'}}
+      />
+      <Stack.Screen
+        component={Login}
+        name="Login"
+        options={{headerShown: false, title: 'Login'}}
+      />
+      <Stack.Screen
+        component={Register1}
+        name="Register1"
+        options={{headerShown: false, title: 'Register1'}}
+      />
+      <Stack.Screen
+        component={Register2}
+        name="Register2"
+        options={{headerShown: false, title: 'Register2'}}
       />
     </Stack.Navigator>
   );

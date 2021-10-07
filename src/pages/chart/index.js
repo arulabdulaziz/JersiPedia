@@ -50,7 +50,7 @@ const Chart = props => {
           title="Checkout"
           padding={responsiveHeight(17)}
           fontSize={18}
-          onPress={() => props.navigation.navigate('Home')}
+          onPress={() => props.navigation.navigate('Checkout')}
         />
       </View>
     </View>

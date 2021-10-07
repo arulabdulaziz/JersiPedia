@@ -9,6 +9,8 @@ import {
   Profile,
   JerseyDetail,
   Chart,
+  Checkout,
+  EditProfile,
 } from '../pages';
 
 const Stack = createNativeStackNavigator();
@@ -54,6 +56,16 @@ const Router = () => {
         component={Chart}
         name="Chart"
         options={{headerShown: true, title: 'Keranjang'}}
+      />
+      <Stack.Screen
+        component={Checkout}
+        name="Checkout"
+        options={{headerShown: true, title: 'Checkout'}}
+      />
+      <Stack.Screen
+        component={EditProfile}
+        name="EditProfile"
+        options={{headerShown: true, title: 'Edit Profile'}}
       />
     </Stack.Navigator>
   );

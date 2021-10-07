@@ -2,12 +2,14 @@ import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {colors, fonts, responsiveHeight} from '../../../utils';
 import {IconArrowRight} from '../../../assets';
-const CardMenu = (props) => {
-    const {menu, navigation} = props
+const CardMenu = props => {
+  const {menu, navigation} = props;
   return (
-    <TouchableOpacity style={styles.container} onPress={() => {
-        navigation.navigate("Splash")
-    }}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => {
+        navigation.navigate(menu.page);
+      }}>
       <View style={styles.menu}>
         {menu.image}
         <Text style={styles.text}>{menu.name}</Text>

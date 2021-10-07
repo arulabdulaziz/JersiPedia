@@ -14,6 +14,7 @@ const Picker = props => {
           selectedValue={value}
           onValueChange={onChange}
           style={styles.picker(width, height, fontSize)}>
+          <PickerInput.Item label={'--Pilih--'} value={''} disabled={true} />
           {options.map((e, i) => (
             <PickerInput.Item label={e} value={e} key={i} />
           ))}

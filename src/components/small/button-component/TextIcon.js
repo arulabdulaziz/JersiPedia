@@ -1,13 +1,15 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {colors, fonts} from '../../../utils';
-import {IconChartWhite} from '../../../assets';
+import {IconChartWhite, IconSubmit} from '../../../assets';
 import {Distance} from '../../';
 const TextIcon = ({onPress, title, padding, fontSize, icon}) => {
   const Icon = () => {
     switch (icon) {
       case 'chart-white':
         return <IconChartWhite />;
+      case 'submit':
+        return <IconSubmit />;
       default:
         return <IconChartWhite />;
     }

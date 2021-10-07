@@ -22,6 +22,7 @@ const Input = props => {
           value={value}
           onChange={onChange}
           numberOfLines={3}
+          placeholder={placeholder ? placeholder : label}
           style={styles.inputTextarea(fontSize)}
         />
       </View>
@@ -34,6 +35,7 @@ const Input = props => {
         keyboardType={keyboardType}
         value={value}
         onChange={onChange}
+        placeholder={placeholder ? placeholder : label}
         style={styles.input(width, height, fontSize)}
       />
     </View>

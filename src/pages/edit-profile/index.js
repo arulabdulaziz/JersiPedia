@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Text, View, ScrollView, Image} from 'react-native';
 import {ButtonComponent, Input, Picker} from '../../components';
-import {responsiveHeight, fonts, colors} from '../../utils';
+import {responsiveHeight, fonts, colors, responsiveWidth} from '../../utils';
 import {dummyProfile} from '../../data';
 const EditProfile = props => {
+  const [provinces, setProvinces] = useState([]);
+  const [cities, setCities] = useState([]);
   return (
     <View style={styles.page}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -14,12 +16,27 @@ const EditProfile = props => {
           value={dummyProfile.phone}
           keyboardType="numeric"
         />
-        <Input
-          label="Alamat:"
-          textarea
-          value={dummyProfile.address}
+        <Input label="Alamat:" textarea value={dummyProfile.address} />
+        <Picker
+          label="Provinsi:"
+          options={provinces}
+          value={dummyProfile.province}
         />
-
+        <Picker
+          label="Kota/Kabupaten:"
+          options={cities}
+          value={dummyProfile.city}
+        />
+        <Text style={styles.text}>Foto Profile:</Text>
+        <View style={styles.changeProfile}>
+          <Image source={dummyProfile.avatar} style={styles.avatar} />
+          <ButtonComponent
+            padding={7}
+            fontSize={18}
+            type="text"
+            title="Change Foto"
+          />
+        </View>
         <View style={styles.buttonSubmit}>
           <ButtonComponent
             padding={responsiveHeight(15)}
@@ -40,10 +57,25 @@ const styles = StyleSheet.create({
   page: {
     flex: 1,
     backgroundColor: 'white',
-    paddingTop: 30,
+    paddingTop: 20,
     paddingHorizontal: 30,
   },
   buttonSubmit: {
     marginVertical: 30,
+  },
+  text: {
+    marginVertical: 20,
+    fontFamily: fonts.primary.regular,
+    fontSize: 18,
+  },
+  avatar: {
+    borderRadius: 40,
+    width: responsiveWidth(150),
+    height: responsiveHeight(150),
+  },
+  changeProfile: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });

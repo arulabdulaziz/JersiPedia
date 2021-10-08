@@ -20,8 +20,8 @@ const Chart = props => {
     }, 3000);
   }, []);
   return (
-    <View>
-      <View>
+    <View style={styles.page}>
+      <View style={styles.container}>
         <FlatList
           data={dummyOrders.filter(e => e.status == 'chart')}
           renderItem={({item}) => <ListChart {...props} chart={item} />}
@@ -60,6 +60,13 @@ const Chart = props => {
 export default Chart;
 
 const styles = StyleSheet.create({
+  page: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  container: {
+    marginBottom: responsiveHeight(180),
+  },
   footer: {
     paddingHorizontal: 30,
     backgroundColor: 'white',

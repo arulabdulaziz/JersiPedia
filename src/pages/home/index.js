@@ -9,7 +9,7 @@ const Home = props => {
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <HeaderMainApp navigation={props.navigation} />
+        <HeaderMainApp {...props} />
         <ImageSlider image={[Slider1, Slider2]} />
         <View style={styles.chooseLiga}>
           <Text style={styles.label}>Pilih Liga</Text>

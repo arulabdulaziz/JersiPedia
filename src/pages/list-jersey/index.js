@@ -6,7 +6,7 @@ import {fonts, colors, responsiveHeight} from '../../utils';
 const ListJerseyPage = (props) => {
   return (
     <View style={styles.page}>
-      <HeaderMainApp />
+      <HeaderMainApp {...props}/>
       <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
         <View style={styles.chooseLiga}>
           <ListLiga />

@@ -7,6 +7,7 @@ import ListJersey from './list-jersey';
 import ListMenu from './list-menu';
 import JerseySlider from './jersey-slider';
 import ListChart from './list-chart';
+import ListHistory from './list-history';
 export {
   BottomNavigation,
   TabItem,
@@ -17,4 +18,5 @@ export {
   ListMenu,
   JerseySlider,
   ListChart,
+  ListHistory,
 };

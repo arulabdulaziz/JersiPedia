@@ -120,7 +120,7 @@ export const dummyOrders = [
     ],
   },
   {
-    id: 2,
+    id: 3,
     date: 'Jumat, 18 September 2020',
     status: 'chart',
     total_price: 500000,
@@ -173,7 +173,7 @@ export const dummyOrders = [
     ],
   },
   {
-    id: 3,
+    id: 4,
     date: 'Jumat, 18 September 2020',
     status: 'chart',
     total_price: 500000,
@@ -226,7 +226,7 @@ export const dummyOrders = [
     ],
   },
   {
-    id: 4,
+    id: 5,
     date: 'Jumat, 18 September 2020',
     status: 'chart',
     total_price: 500000,
@@ -279,7 +279,7 @@ export const dummyOrders = [
     ],
   },
   {
-    id: 5,
+    id: 6,
     date: 'Jumat, 18 September 2020',
     status: 'chart',
     total_price: 500000,

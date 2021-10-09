@@ -7,6 +7,7 @@ import Input from './input';
 import Picker from './picker';
 import CardChart from './card-chart';
 import CardAddress from './card-address';
+import CardHistory from './card-history';
 export {
   Distance,
   ButtonComponent,
@@ -17,4 +18,5 @@ export {
   Picker,
   CardChart,
   CardAddress,
+  CardHistory,
 };

@@ -44,6 +44,7 @@ const EditProfile = props => {
             type="text-icon"
             title="Simpan"
             icon="submit"
+            onPress={() => props.navigation.replace("MainApp")}
           />
         </View>
       </ScrollView>

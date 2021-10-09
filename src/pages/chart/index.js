@@ -23,6 +23,7 @@ const Chart = props => {
     <View style={styles.page}>
       <View style={styles.container}>
         <FlatList
+          showsVerticalScrollIndicator={false}
           data={dummyOrders.filter(e => e.status == 'chart')}
           renderItem={({item}) => <ListChart {...props} chart={item} />}
           keyExtractor={item => item.id}

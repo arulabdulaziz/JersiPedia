@@ -12,6 +12,7 @@ const Input = props => {
     value,
     onChange,
     keyboardType,
+    secureTextEntry
   } = props;
   if (textarea) {
     return (
@@ -37,6 +38,7 @@ const Input = props => {
         onChange={onChange}
         placeholder={placeholder ? placeholder : label}
         style={styles.input(width, height, fontSize)}
+        secureTextEntry={secureTextEntry}
       />
     </View>
   );

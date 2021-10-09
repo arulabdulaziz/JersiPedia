@@ -18,9 +18,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   }),
   title: fontSize => ({
-    fontSize,
+    fontSize: fontSize ? fontSize : 13,
     fontFamily: fonts.primary.bold,
-    textAlign: "center",
-    color: "white"
+    textAlign: 'center',
+    color: 'white',
   }),
 });

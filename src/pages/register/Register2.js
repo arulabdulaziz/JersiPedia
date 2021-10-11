@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,14 +9,28 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
+import {connect, useDispatch} from 'react-redux';
 import {IlustrationRegister2} from '../../assets';
 import {Distance, ButtonComponent, Input, Picker} from '../../components';
 import {responsiveHeight, responsiveWidth, colors, fonts} from '../../utils';
+import {getProvinceList} from '../../store/actions/raja-ongkir';
 const Register2 = props => {
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
+  // const dispatch = useDispatch()
+  const [provinceSelected, setProvinceSelected] = useState(null);
+  useEffect(() => {
+    props.getProvinceList();
+    // dispatch(getProvinceList());
+  }, []);
+  // useEffect(() => {
+  //   setProvinceSelected(
+  //     props.provinceList.find(e => e.province == 'Jawa Tengah'),
+  //   );
+  // }, [props.provinceList]);
   return (
     <View style={styles.page}>
+      {/* <Text>{JSON.stringify(provinceSelected)}</Text> */}
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -44,9 +58,11 @@ const Register2 = props => {
               <View style={styles.cardLogin}>
                 <Input label="Alamat :" textarea />
                 <Picker
+                  type="province"
                   label="Provinsi :"
-                  options={provinces}
-                  value="Jawa Tengah"
+                  options={props.provinceList}
+                  value={provinceSelected}
+                  onChange={value => setProvinceSelected(value)}
                 />
                 <Picker
                   label="Kota / Kabupaten :"
@@ -71,8 +87,13 @@ const Register2 = props => {
     </View>
   );
 };
-
-export default Register2;
+const mapStateToProps = state => ({
+  provinceList: state.rajaOngkirReducer.getProvinceData,
+});
+const mapStateToDispatch = dispatch => ({
+  getProvinceList: () => dispatch(getProvinceList()),
+});
+export default connect(mapStateToProps, mapStateToDispatch)(Register2);
 
 const styles = StyleSheet.create({
   page: {

@@ -4,7 +4,7 @@ import {fonts, colors, responsiveHeight} from '../../../utils';
 import {Picker as PickerInput} from '@react-native-picker/picker';
 
 const Picker = props => {
-  const {fontSize, textArea, width, height, label, onChange, options, value} =
+  const {fontSize, textArea, width, height, label, onChange, options, value, type} =
     props;
   return (
     <View style={styles.container}>
@@ -15,9 +15,18 @@ const Picker = props => {
           onValueChange={onChange}
           style={styles.picker(width, height, fontSize)}>
           <PickerInput.Item label={'--Pilih--'} value={''} disabled={true} />
-          {options.map((e, i) => (
-            <PickerInput.Item label={e} value={e} key={i} />
-          ))}
+          {options.map((e, i) => {
+            if (type == 'province') {
+              return (
+                <PickerInput.Item
+                  label={e.province}
+                  value={e}
+                  key={e.province_id}
+                />
+              );
+            }
+            return <PickerInput.Item label={e} value={e} key={i} />;
+          })}
         </PickerInput>
       </View>
     </View>

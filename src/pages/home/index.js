@@ -5,6 +5,7 @@ import {ListLiga, ListJersey, Distance} from '../../components';
 import {fonts, colors, responsiveHeight} from '../../utils';
 import {ButtonComponent} from '../../components';
 import {Slider1, Slider2} from '../../assets';
+// import {API_URL, API_TOKEN} from '@env';
 const Home = props => {
   return (
     <View style={styles.container}>

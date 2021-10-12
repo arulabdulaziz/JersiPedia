@@ -13,21 +13,23 @@ import {connect, useDispatch} from 'react-redux';
 import {IlustrationRegister2} from '../../assets';
 import {Distance, ButtonComponent, Input, Picker} from '../../components';
 import {responsiveHeight, responsiveWidth, colors, fonts} from '../../utils';
-import {getProvinceList} from '../../store/actions/raja-ongkir';
+import {getProvinceList, getCityList} from '../../store/actions/raja-ongkir';
 const Register2 = props => {
   const [provinces, setProvinces] = useState([]);
   const [cities, setCities] = useState([]);
   // const dispatch = useDispatch()
   const [provinceSelected, setProvinceSelected] = useState(null);
+  const [citySelected, setCitySelected] = useState(null);
   useEffect(() => {
     props.getProvinceList();
     // dispatch(getProvinceList());
   }, []);
-  // useEffect(() => {
-  //   setProvinceSelected(
-  //     props.provinceList.find(e => e.province == 'Jawa Tengah'),
-  //   );
-  // }, [props.provinceList]);
+  useEffect(() => {
+    setCitySelected(null);
+    if (provinceSelected) {
+      props.getCityList(provinceSelected.province_id);
+    }
+  }, [provinceSelected]);
   return (
     <View style={styles.page}>
       {/* <Text>{JSON.stringify(provinceSelected)}</Text> */}
@@ -65,9 +67,11 @@ const Register2 = props => {
                   onChange={value => setProvinceSelected(value)}
                 />
                 <Picker
+                  type="city"
                   label="Kota / Kabupaten :"
-                  options={cities}
-                  value="Semarang"
+                  options={props.cityList}
+                  value={citySelected}
+                  onChange={value => setCitySelected(value)}
                 />
                 <Distance height={25} />
                 <ButtonComponent
@@ -89,9 +93,11 @@ const Register2 = props => {
 };
 const mapStateToProps = state => ({
   provinceList: state.rajaOngkirReducer.getProvinceData,
+  cityList: state.rajaOngkirReducer.getCityData,
 });
 const mapStateToDispatch = dispatch => ({
   getProvinceList: () => dispatch(getProvinceList()),
+  getCityList: province_id => dispatch(getCityList(province_id)),
 });
 export default connect(mapStateToProps, mapStateToDispatch)(Register2);
 

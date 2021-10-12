@@ -24,6 +24,14 @@ const Picker = props => {
                   key={e.province_id}
                 />
               );
+            }else if (type == 'city') {
+              return (
+                <PickerInput.Item
+                  label={`${e.type} ${e.city_name}`}
+                  value={e}
+                  key={e.city_id}
+                />
+              );
             }
             return <PickerInput.Item label={e} value={e} key={i} />;
           })}

@@ -8,6 +8,7 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from 'react-native';
 import {IlustrationRegister1} from '../../assets';
 import {Distance, ButtonComponent, Input} from '../../components';
@@ -15,6 +16,20 @@ import {responsiveHeight, responsiveWidth, colors, fonts} from '../../utils';
 const Register1 = props => {
   const [province, setProvince] = useState([]);
   const [cities, setCities] = useState([]);
+  const [dataUser, setDataUser] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    password: '',
+  });
+  const onContinue = () => {
+    const {name, email, phone, password} = dataUser;
+    if(name && email && phone && password){
+      props.navigation.navigate("Register2",dataUser)
+    }else{
+      Alert.alert("Isi Data Diri!","Nama, Email, No Hp, dan Password harus diisi!")
+    }
+  }
   return (
     <View style={styles.page}>
       <KeyboardAvoidingView
@@ -42,10 +57,32 @@ const Register1 = props => {
                 <View style={styles.circleDisabled}></View>
               </View>
               <View style={styles.cardLogin}>
-                <Input label="Name:" />
-                <Input label="Email:" />
-                <Input label="No Hp:" keyboardType="numeric" />
-                <Input label="Password" secureTextEntry />
+                <Input
+                  label="Name:"
+                  onChangeText={value =>
+                    setDataUser({...dataUser, name: value})
+                  }
+                />
+                <Input
+                  label="Email:"
+                  onChangeText={value =>
+                    setDataUser({...dataUser, email: value})
+                  }
+                />
+                <Input
+                  label="No Hp:"
+                  keyboardType="numeric"
+                  onChangeText={value =>
+                    setDataUser({...dataUser, phone: value})
+                  }
+                />
+                <Input
+                  label="Password"
+                  secureTextEntry
+                  onChangeText={value =>
+                    setDataUser({...dataUser, password: value})
+                  }
+                />
                 <Distance height={25} />
                 <ButtonComponent
                   type="text-icon"
@@ -53,7 +90,7 @@ const Register1 = props => {
                   padding={12}
                   title="Lanjutkan"
                   fontSize={18}
-                  onPress={() => props.navigation.navigate('Register2')}
+                  onPress={() => onContinue()}
                 />
               </View>
               <Distance height={100} />

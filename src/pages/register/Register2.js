@@ -13,15 +13,18 @@ import {connect, useDispatch} from 'react-redux';
 import {IlustrationRegister2} from '../../assets';
 import {Distance, ButtonComponent, Input, Picker} from '../../components';
 import {responsiveHeight, responsiveWidth, colors, fonts} from '../../utils';
-import {getProvinceList, getCityList} from '../../store/actions/raja-ongkir';
+import {getProvinceList, getCityList, registerUser} from '../../store/actions';
 const Register2 = props => {
-  const [provinces, setProvinces] = useState([]);
-  const [cities, setCities] = useState([]);
-  // const dispatch = useDispatch()
   const [provinceSelected, setProvinceSelected] = useState(null);
   const [citySelected, setCitySelected] = useState(null);
+  const [address, setAddress] = useState('');
+  const {name, email, phone, password} = props.route.params;
   useEffect(() => {
-    props.getProvinceList();
+    if (!name || !email || !phone || !password) {
+      props.navigation.repalce('Register1');
+    } else {
+      props.getProvinceList();
+    }
     // dispatch(getProvinceList());
   }, []);
   useEffect(() => {
@@ -30,9 +33,28 @@ const Register2 = props => {
       props.getCityList(provinceSelected.province_id);
     }
   }, [provinceSelected]);
+  const onContinue = () => {
+    if (address && provinceSelected && citySelected) {
+      const data = {
+        name,
+        email,
+        phone,
+        address,
+        province_id: provinceSelected.province_id,
+        city_id: citySelected.city_id,
+      };
+      // console.log(data, password);
+      props.registerUser(data, password);
+    } else {
+      Alert.alert(
+        'Isi Alamat Anda!',
+        'Alamat, Provinsi, dan Kota harus diisi!',
+      );
+    }
+  };
   return (
     <View style={styles.page}>
-      {/* <Text>{JSON.stringify(provinceSelected)}</Text> */}
+      {/* <Text>{JSON.stringify(props.route.params)}</Text> */}
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -49,8 +71,8 @@ const Register2 = props => {
                 <IlustrationRegister2 />
               </View>
               <View style={styles.title}>
-                <Text style={styles.textTitle}>Daftar</Text>
-                <Text style={styles.textTitle}>Isi Data Diri Anda</Text>
+                <Text style={styles.textTitle}>Isi Alamat</Text>
+                <Text style={styles.textTitle}>Lengkap Anda</Text>
               </View>
               <View style={styles.wrapperCircle}>
                 <View style={styles.circleDisabled}></View>
@@ -58,7 +80,11 @@ const Register2 = props => {
                 <View style={styles.circlePrimary}></View>
               </View>
               <View style={styles.cardLogin}>
-                <Input label="Alamat :" textarea />
+                <Input
+                  label="Alamat :"
+                  textarea
+                  onChangeText={value => setAddress(value)}
+                />
                 <Picker
                   type="province"
                   label="Provinsi :"
@@ -80,7 +106,7 @@ const Register2 = props => {
                   padding={12}
                   title="Lanjutkan"
                   fontSize={18}
-                  onPress={() => props.navigation.navigate('MainApp')}
+                  onPress={() => onContinue()}
                 />
               </View>
               <Distance height={100} />
@@ -98,6 +124,7 @@ const mapStateToProps = state => ({
 const mapStateToDispatch = dispatch => ({
   getProvinceList: () => dispatch(getProvinceList()),
   getCityList: province_id => dispatch(getCityList(province_id)),
+  registerUser: (data, password) => dispatch(registerUser(data, password)),
 });
 export default connect(mapStateToProps, mapStateToDispatch)(Register2);
 

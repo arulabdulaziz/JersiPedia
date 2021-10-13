@@ -12,7 +12,8 @@ const Input = props => {
     value,
     onChange,
     keyboardType,
-    secureTextEntry
+    secureTextEntry,
+    onChangeText,
   } = props;
   if (textarea) {
     return (
@@ -22,6 +23,7 @@ const Input = props => {
           keyboardType={keyboardType}
           value={value}
           onChange={onChange}
+          onChangeText={onChangeText}
           numberOfLines={3}
           placeholder={placeholder ? placeholder : label}
           style={styles.inputTextarea(fontSize)}
@@ -36,6 +38,7 @@ const Input = props => {
         keyboardType={keyboardType}
         value={value}
         onChange={onChange}
+        onChangeText={onChangeText}
         placeholder={placeholder ? placeholder : label}
         style={styles.input(width, height, fontSize)}
         secureTextEntry={secureTextEntry}

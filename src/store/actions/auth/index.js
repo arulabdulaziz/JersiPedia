@@ -20,7 +20,7 @@ export const registerUser = (data, password) => {
           ...data,
           uid: success.user.uid,
         };
-        
+        console.log(newData, "<< new Data")
         FIREBASE.database()
           .ref('users/' + success.user.uid)
           .set(newData);
@@ -29,12 +29,11 @@ export const registerUser = (data, password) => {
         dispatch({
           type: REGISTER_USER,
           payload: {
-            data: dataBaru,
+            data: newData,
             loading: true,
             errorMessage: '',
           },
         });
-
         //Local Storage (Async Storage)
         storeData('user', newData);
       })

@@ -8,6 +8,7 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from 'react-native';
 import {connect, useDispatch} from 'react-redux';
 import {IlustrationRegister2} from '../../assets';

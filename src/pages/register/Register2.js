@@ -20,9 +20,10 @@ const Register2 = props => {
   const [citySelected, setCitySelected] = useState(null);
   const [address, setAddress] = useState('');
   const {name, email, phone, password} = props.route.params;
+  const {dataUser, loading, error} = props;
   useEffect(() => {
     if (!name || !email || !phone || !password) {
-      props.navigation.repalce('Register1');
+      props.navigation.replace('Register1');
     } else {
       props.getProvinceList();
     }
@@ -34,6 +35,11 @@ const Register2 = props => {
       props.getCityList(provinceSelected.province_id);
     }
   }, [provinceSelected]);
+  useEffect(() => {
+    if (dataUser) {
+      props.navigation.replace('MainApp');
+    }
+  }, [dataUser]);
   const onContinue = () => {
     if (address && provinceSelected && citySelected) {
       const data = {
@@ -108,6 +114,7 @@ const Register2 = props => {
                   title="Lanjutkan"
                   fontSize={18}
                   onPress={() => onContinue()}
+                  loading={loading}
                 />
               </View>
               <Distance height={100} />
@@ -121,6 +128,9 @@ const Register2 = props => {
 const mapStateToProps = state => ({
   provinceList: state.rajaOngkirReducer.getProvinceData,
   cityList: state.rajaOngkirReducer.getCityData,
+  dataUser: state.authReducer.registerData,
+  loading: state.authReducer.registerLoading,
+  error: state.authReducer.registerError,
 });
 const mapStateToDispatch = dispatch => ({
   getProvinceList: () => dispatch(getProvinceList()),

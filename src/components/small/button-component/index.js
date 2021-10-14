@@ -3,8 +3,12 @@ import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {IconChart, IconBack} from '../../../assets';
 import TextIcon from './TextIcon';
 import TextOnly from './TextOnly';
+import TextLoading from "./TextLoading"
 const ButtonComponent = props => {
-  const {onPress, padding, totalChart, type, icon} = props;
+  const {onPress, padding, totalChart, type, icon, loading} = props;
+  if(loading){
+    return <TextLoading {...props}/>
+  }
   const Icon = () => {
     switch (icon) {
       case 'chart':

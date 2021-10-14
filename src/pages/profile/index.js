@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, ScrollView, Image} from 'react-native';
+import {useIsFocused} from '@react-navigation/native';
 import {
   colors,
   fonts,
@@ -7,24 +8,42 @@ import {
   responsiveWidth,
   heightMobileUI,
 } from '../../utils';
-import {dummyProfile, dummyMenu} from '../../data';
+import {dummyMenu} from '../../data';
 import {RFValue} from 'react-native-responsive-fontsize';
-import { ListMenu } from '../../components';
-const Profile = (props) => {
-  const [profile, setProfile] = useState(dummyProfile);
+import {ListMenu} from '../../components';
+import {DefaultUser} from '../../assets';
+import {getData} from '../../utils';
+const Profile = props => {
+  const [profile, setProfile] = useState({});
   const [menus, setMenus] = useState(dummyMenu);
+  const isFocused = useIsFocused();
+  const getDataUser = async () => {
+    try {
+      const data = await getData('user');
+      if (data.name) setProfile(data);
+      else props.navigation.replace('Login');
+    } catch (error) {
+      setProfile(error);
+    }
+  };
+  useEffect(() => {
+    if(isFocused){
+      getDataUser();
+    }
+  }, [isFocused]);
   return (
     <View style={styles.page}>
       <View style={styles.container}>
-        <Image source={profile.avatar} style={styles.avatar} />
-          <View style={styles.profile}>
-            <Text style={styles.name}>{profile.name}</Text>
-            <Text style={styles.desc}>No. HP : {profile.phone}</Text>
-            <Text style={styles.desc}>
-              {profile.address} {profile.city}
-            </Text>
-          </View>
-          <ListMenu menus={menus} navigation={props.navigation}/>
+        <Image
+          source={profile.avatar ? {uri: profile.avatar} : DefaultUser}
+          style={styles.avatar}
+        />
+        <View style={styles.profile}>
+          <Text style={styles.name}>{profile.name}</Text>
+          <Text style={styles.desc}>No. HP : {profile.phone}</Text>
+          <Text style={styles.desc}>{profile.address}</Text>
+        </View>
+        <ListMenu menus={menus} navigation={props.navigation} />
       </View>
     </View>
   );

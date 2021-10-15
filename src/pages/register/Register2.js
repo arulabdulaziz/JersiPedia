@@ -16,8 +16,8 @@ import {Distance, ButtonComponent, Input, Picker} from '../../components';
 import {responsiveHeight, responsiveWidth, colors, fonts} from '../../utils';
 import {getProvinceList, getCityList, registerUser} from '../../store/actions';
 const Register2 = props => {
-  const [provinceSelected, setProvinceSelected] = useState(null);
-  const [citySelected, setCitySelected] = useState(null);
+  const [provinceSelected, setProvinceSelected] = useState("");
+  const [citySelected, setCitySelected] = useState("");
   const [address, setAddress] = useState('');
   const {name, email, phone, password} = props.route.params;
   const {dataUser, loading, error} = props;
@@ -32,7 +32,7 @@ const Register2 = props => {
   useEffect(() => {
     setCitySelected(null);
     if (provinceSelected) {
-      props.getCityList(provinceSelected.province_id);
+      props.getCityList(provinceSelected);
     }
   }, [provinceSelected]);
   useEffect(() => {
@@ -47,8 +47,8 @@ const Register2 = props => {
         email,
         phone,
         address,
-        province_id: provinceSelected.province_id,
-        city_id: citySelected.city_id,
+        province_id: provinceSelected,
+        city_id: citySelected,
       };
       // console.log(data, password);
       props.registerUser(data, password);

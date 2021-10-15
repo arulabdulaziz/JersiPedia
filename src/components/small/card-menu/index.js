@@ -1,15 +1,43 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {colors, fonts, responsiveHeight} from '../../../utils';
+import {StyleSheet, Text, TouchableOpacity, View, Alert} from 'react-native';
+import {
+  colors,
+  fonts,
+  responsiveHeight,
+  clearStorage,
+  getData,
+} from '../../../utils';
 import {IconArrowRight} from '../../../assets';
+import FIREBASE from '../../../config/FIREBASE';
+import {useDispatch} from 'react-redux';
+import {LOGOUT_USER} from '../../../store/actions';
 const CardMenu = props => {
+  const dispatch = useDispatch();
   const {menu, navigation} = props;
+  const onNavigate = () => {
+    if (menu.page == 'Login') {
+      getData('user')
+        .then(value => {
+          if (value) {
+            return FIREBASE.auth().signOut();
+          } else {
+            return true;
+          }
+        })
+        .then(function () {
+          dispatch({type: LOGOUT_USER});
+          clearStorage();
+          navigation.replace('Login');
+        })
+        .catch(function (error) {
+          Alert.alert('Error', JSON.stringify(error));
+        });
+    } else {
+      navigation.navigate(menu.page);
+    }
+  };
   return (
-    <TouchableOpacity
-      style={styles.container}
-      onPress={() => {
-        navigation.navigate(menu.page);
-      }}>
+    <TouchableOpacity style={styles.container} onPress={() => onNavigate()}>
       <View style={styles.menu}>
         {menu.image}
         <Text style={styles.text}>{menu.name}</Text>

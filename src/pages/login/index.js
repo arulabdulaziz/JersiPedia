@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,12 +9,47 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from 'react-native';
+import {useIsFocused} from '@react-navigation/native';
 import {Logo, Ilustration} from '../../assets';
-import {responsiveHeight, colors, fonts} from '../../utils';
+import {responsiveHeight, colors, fonts, getData} from '../../utils';
 import {Input, ButtonComponent, Distance} from '../../components';
+import {connect, useDispatch} from 'react-redux';
+import {loginUser} from '../../store/actions';
+
 const Login = props => {
-  const {navigation} = props;
+  const {navigation, loading, dataUser} = props;
+  const isFocused = useIsFocused();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const checkDataUser = async () => {
+    try {
+      if (isFocused) {
+        if (dataUser) {
+          navigation.replace('MainApp');
+        } else {
+          const storeData = await getData('user');
+          if (storeData.name) {
+            console.log(storeData, 'storage login');
+            navigation.replace('MainApp');
+          }
+        }
+      }
+    } catch (error) {
+      console.log(error, 'error get storage data');
+    }
+  };
+  useEffect(() => {
+    checkDataUser();
+  }, [isFocused, dataUser]);
+  const login = () => {
+    if (email && password) {
+      props.loginUser(email, password);
+    } else {
+      Alert.alert('Isi Email dan Password', 'email dan password wajib diisi!');
+    }
+  };
   return (
     <View style={styles.pages}>
       <KeyboardAvoidingView
@@ -26,14 +61,20 @@ const Login = props => {
               <Logo />
             </View>
             <View style={styles.cardLogin}>
-              <Input label="Email" />
-              <Input label="Password" secureTextEntry />
+              <Input label="Email" onChangeText={value => setEmail(value)} />
+              <Input
+                label="Password"
+                secureTextEntry
+                onChangeText={value => setPassword(value)}
+              />
               <Distance height={25} />
               <ButtonComponent
                 type="text"
                 padding={12}
                 title="Login"
                 fontSize={18}
+                loading={loading}
+                onPress={() => login()}
               />
             </View>
             <View style={styles.register}>
@@ -53,8 +94,15 @@ const Login = props => {
     </View>
   );
 };
-
-export default Login;
+const mapStateToProps = state => ({
+  dataUser: state.authReducer.loginData,
+  loading: state.authReducer.loginLoading,
+  error: state.authReducer.loginError,
+});
+const mapStateToDispatch = dispatch => ({
+  loginUser: (email, password) => dispatch(loginUser(email, password)),
+});
+export default connect(mapStateToProps, mapStateToDispatch)(Login);
 
 const styles = StyleSheet.create({
   pages: {

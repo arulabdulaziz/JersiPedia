@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {fonts, colors, responsiveHeight} from '../../../utils';
 import {Picker as PickerInput} from '@react-native-picker/picker';
-
+// GANTI VALUE PROVINCE DAN CITIES DENGAN ID NYA LANGSUNG, TIDAK DENGAN OBJ NY!!!
 const Picker = props => {
   const {fontSize, textArea, width, height, label, onChange, options, value, type} =
     props;
@@ -20,15 +20,15 @@ const Picker = props => {
               return (
                 <PickerInput.Item
                   label={e.province}
-                  value={e}
+                  value={e.province_id}
                   key={e.province_id}
                 />
               );
-            }else if (type == 'city') {
+            } else if (type == 'city') {
               return (
                 <PickerInput.Item
                   label={`${e.type} ${e.city_name}`}
-                  value={e}
+                  value={e.city_id}
                   key={e.city_id}
                 />
               );

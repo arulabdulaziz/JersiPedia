@@ -20,6 +20,7 @@ const Profile = props => {
   const getDataUser = async () => {
     try {
       const data = await getData('user');
+      // console.log(data, "data storage")
       if (data.name) setProfile(data);
       else props.navigation.replace('Login');
     } catch (error) {

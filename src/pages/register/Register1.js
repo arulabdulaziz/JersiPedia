@@ -14,8 +14,6 @@ import {IlustrationRegister1} from '../../assets';
 import {Distance, ButtonComponent, Input} from '../../components';
 import {responsiveHeight, responsiveWidth, colors, fonts} from '../../utils';
 const Register1 = props => {
-  const [province, setProvince] = useState([]);
-  const [cities, setCities] = useState([]);
   const [dataUser, setDataUser] = useState({
     name: '',
     phone: '',

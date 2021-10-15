@@ -1,7 +1,8 @@
 import FIREBASE from '../../../config/FIREBASE';
-import { storeData } from '../../../utils';
+import {storeData} from '../../../utils';
 export const REGISTER_USER = 'REGISTER_USER';
-
+export const LOGIN_USER = 'LOGIN_USER';
+export const LOGOUT_USER = 'LOGOUT_USER';
 export const registerUser = (data, password) => {
   return dispatch => {
     // LOADING
@@ -20,7 +21,7 @@ export const registerUser = (data, password) => {
           ...data,
           uid: success.user.uid,
         };
-        console.log(newData, "<< new Data")
+        console.log(newData, '<< new Data');
         FIREBASE.database()
           .ref('users/' + success.user.uid)
           .set(newData);
@@ -30,7 +31,7 @@ export const registerUser = (data, password) => {
           type: REGISTER_USER,
           payload: {
             data: newData,
-            loading: true,
+            loading: false,
             errorMessage: '',
           },
         });
@@ -43,11 +44,54 @@ export const registerUser = (data, password) => {
           type: REGISTER_USER,
           payload: {
             data: null,
-            loading: true,
+            loading: false,
             errorMessage: error.message,
           },
         });
         alert(error.message);
       });
+  };
+};
+export const loginUser = (email, password) => {
+  return async (dispatch, getState) => {
+    try {
+      // LOADING
+      dispatch({
+        type: LOGIN_USER,
+        payload: {
+          data: null,
+          loading: true,
+          errorMessage: '',
+        },
+      });
+      const auth = await FIREBASE.auth().signInWithEmailAndPassword(email, password);
+      const user = await FIREBASE.database()
+        .ref('users/' + auth.user.uid)
+        .once('value');
+      if (user.val()) {
+        dispatch({
+          type: LOGIN_USER,
+          payload: {
+            data: user.val(),
+            loading: false,
+            errorMessage: '',
+          },
+        });
+        storeData('user', user.val());
+      } else {
+        throw {message: 'Data User Tidak Ditemukan', code: 401};
+      }
+    } catch (error) {
+      // ERROR
+      dispatch({
+        type: LOGIN_USER,
+        payload: {
+          data: null,
+          loading: false,
+          errorMessage: error.message,
+        },
+      });
+      alert(error.message);
+    }
   };
 };

@@ -11,18 +11,11 @@ import {
 // import {API_HEADER_RAJAONGKIR_COST} from '../../../utils';
 export const GET_PROVINCES = 'GET_PROVINCES';
 export const GET_CITIES = 'GET_CITIES';
-
+import {dispatchLoading, dispatchSuccess, dispatchError} from '../../../utils';
 export function getProvinceList() {
   return (dispatch, getState) => {
     console.log('action get Province', API_RAJAONGKIR);
-    dispatch({
-      type: GET_PROVINCES,
-      payload: {
-        data: [],
-        loading: true,
-        errorMessage: '',
-      },
-    });
+    dispatchLoading(dispatch, GET_PROVINCES, []);
     axios({
       method: 'GET',
       url: API_RAJAONGKIR + '/province',
@@ -35,25 +28,15 @@ export function getProvinceList() {
       .then(response => {
         // console.log("response")
         if (response.status != 200) throw response;
-        dispatch({
-          type: GET_PROVINCES,
-          payload: {
-            data: response.data ? response.data.rajaongkir.results : [],
-            loading: false,
-            errorMessage: '',
-          },
-        });
+        dispatchSuccess(
+          dispatch,
+          GET_PROVINCES,
+          response.data ? response.data.rajaongkir.results : [],
+        );
       })
       .catch(error => {
         // console.log("error catch")
-        dispatch({
-          type: GET_PROVINCES,
-          payload: {
-            data: [],
-            loading: false,
-            errorMessage: JSON.stringify(error),
-          },
-        });
+        dispatchError(dispatch, REGISTER_USER, JSON.stringify(error), []);
         alert(JSON.stringify(error));
       });
   };
@@ -61,14 +44,7 @@ export function getProvinceList() {
 export function getCityList(province_id) {
   return (dispatch, getState) => {
     console.log('action get City', API_RAJAONGKIR);
-    dispatch({
-      type: GET_CITIES,
-      payload: {
-        data: [],
-        loading: true,
-        errorMessage: '',
-      },
-    });
+    dispatchLoading(dispatch, GET_CITIES, []);
     axios({
       method: 'GET',
       url: API_RAJAONGKIR + '/city',
@@ -84,25 +60,15 @@ export function getCityList(province_id) {
       .then(response => {
         // console.log("response")
         if (response.status != 200) throw response;
-        dispatch({
-          type: GET_CITIES,
-          payload: {
-            data: response.data ? response.data.rajaongkir.results : [],
-            loading: false,
-            errorMessage: '',
-          },
-        });
+        dispatchSuccess(
+          dispatch,
+          GET_CITIES,
+          response.data ? response.data.rajaongkir.results : [],
+        );
       })
       .catch(error => {
         // console.log("error catch")
-        dispatch({
-          type: GET_CITIES,
-          payload: {
-            data: [],
-            loading: false,
-            errorMessage: JSON.stringify(error),
-          },
-        });
+        dispatchError(dispatch, GET_CITIES, JSON.stringify(error), []);
         alert(JSON.stringify(error));
       });
   };

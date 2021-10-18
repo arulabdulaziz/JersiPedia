@@ -39,6 +39,7 @@ const EditProfile = props => {
   useEffect(() => {
     console.log(updateProfileData, 'updateProfileData');
     if (updateProfileData && updateProfileData != updateProfile) {
+      Alert.alert("Sukses", "Update Profile Sukses")
       props.navigation.replace('MainApp');
     } else if (updateProfileData) {
       setUpdateProfile(updateProfileData);

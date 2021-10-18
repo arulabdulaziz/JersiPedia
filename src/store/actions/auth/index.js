@@ -1,19 +1,17 @@
 import FIREBASE from '../../../config/FIREBASE';
-import {storeData} from '../../../utils';
+import {
+  storeData,
+  dispatchLoading,
+  dispatchSuccess,
+  dispatchError,
+} from '../../../utils';
 export const REGISTER_USER = 'REGISTER_USER';
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const registerUser = (data, password) => {
   return dispatch => {
     // LOADING
-    dispatch({
-      type: REGISTER_USER,
-      payload: {
-        data: null,
-        loading: true,
-        errorMessage: '',
-      },
-    });
+    dispatchLoading(dispatch, REGISTER_USER);
     FIREBASE.auth()
       .createUserWithEmailAndPassword(data.email, password)
       .then(success => {
@@ -27,27 +25,13 @@ export const registerUser = (data, password) => {
           .set(newData);
 
         //SUKSES
-        dispatch({
-          type: REGISTER_USER,
-          payload: {
-            data: newData,
-            loading: false,
-            errorMessage: '',
-          },
-        });
+        dispatchSuccess(dispatch, REGISTER_USER, newData);
         //Local Storage (Async Storage)
         storeData('user', newData);
       })
       .catch(error => {
         // ERROR
-        dispatch({
-          type: REGISTER_USER,
-          payload: {
-            data: null,
-            loading: false,
-            errorMessage: error.message,
-          },
-        });
+        dispatchError(dispatch, REGISTER_USER, error.message);
         alert(error.message);
       });
   };
@@ -56,14 +40,7 @@ export const loginUser = (email, password) => {
   return async (dispatch, getState) => {
     try {
       // LOADING
-      dispatch({
-        type: LOGIN_USER,
-        payload: {
-          data: null,
-          loading: true,
-          errorMessage: '',
-        },
-      });
+      dispatchLoading(dispatch, LOGIN_USER);
       const auth = await FIREBASE.auth().signInWithEmailAndPassword(
         email,
         password,
@@ -72,14 +49,7 @@ export const loginUser = (email, password) => {
         .ref('users/' + auth.user.uid)
         .once('value');
       if (user.val()) {
-        dispatch({
-          type: LOGIN_USER,
-          payload: {
-            data: user.val(),
-            loading: false,
-            errorMessage: '',
-          },
-        });
+        dispatchSuccess(dispatch, LOGIN_USER, user.val());
         storeData('user', user.val());
       } else {
         throw {message: 'Data User Tidak Ditemukan', code: 401};
@@ -94,6 +64,7 @@ export const loginUser = (email, password) => {
           errorMessage: error.message,
         },
       });
+      dispatchError(dispatch, LOGIN_USER, error.message);
       alert(error.message);
     }
   };

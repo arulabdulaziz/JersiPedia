@@ -18,7 +18,7 @@ function rajaOngkirReducer(state = initialState, action) {
         getProvinceError: action.payload.errorMessage,
       };
     case GET_CITIES:
-      console.log(action.payload);
+      // console.log(action.payload);
       return {
         ...state,
         getCityData: action.payload.data,

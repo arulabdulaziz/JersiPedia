@@ -1,16 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
-import {StyleSheet, Text, View, ScrollView, Image} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Image, Alert} from 'react-native';
 import {ButtonComponent, Input, Picker} from '../../components';
 import {responsiveHeight, fonts, colors, responsiveWidth} from '../../utils';
 import {dummyProfile} from '../../data';
 import {getData} from '../../utils';
 import {DefaultUser} from '../../assets';
 import {getProvinceList, getCityList} from '../../store/actions';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 const EditProfile = props => {
-  const [provinceSelected, setProvinceSelected] = useState(null);
-  const [citySelected, setCitySelected] = useState(null);
+  const [avatarBase64, setAvatarBase64] = useState('');
   const [dataUser, setDataUser] = useState({
     name: '',
     phone: '',
@@ -36,11 +36,47 @@ const EditProfile = props => {
     props.getProvinceList();
   }, []);
   useEffect(() => {
-    console.log('provincee useeffect');
     if (dataUser.province_id) {
       props.getCityList(dataUser.province_id);
     }
   }, [dataUser.province_id]);
+  const getImage = () => {
+    launchImageLibrary(
+      {
+        quality: 1,
+        maxHeight: 500,
+        maxWidth: 500,
+        includeBase64: true,
+        selectionLimit: 1,
+        cameraType: 'front',
+      },
+      response => {
+        const {didCancel, errorCode, errorMessage} = response;
+        if (didCancel || errorCode || errorMessage) {
+          Alert.alert('Error', 'Maaf sepertinya kamu tidak memilih foto');
+        } else {
+          // console.log(response, 'response');
+          const image = response.assets[0];
+          const uri = image.uri;
+          const base64 = `data:${image.type};base64,${image.base64}`;
+          // console.log(uri, base64);
+          console.log(dataUser, "datUser")
+          setDataUser({
+            ...dataUser,
+            avatar: uri,
+          });
+          setAvatarBase64(base64);
+        }
+      },
+    );
+  };
+  const submit = () => {
+    const payload = {
+      ...dataUser
+    }
+    if(avatarBase64) payload.avatar = avatarBase64
+    console.log(payload)
+  }
   return (
     <View style={styles.page}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -51,8 +87,9 @@ const EditProfile = props => {
         />
         <Input
           label="Email:"
+          disabled
           value={dataUser.email}
-          onChangeText={value => setDataUser({...dataUser, email: value})}
+          // onChangeText={value => setDataUser({...dataUser, email: value})}
         />
         <Input
           label="No Hp:"
@@ -93,6 +130,7 @@ const EditProfile = props => {
             fontSize={18}
             type="text"
             title="Change Foto"
+            onPress={() => getImage()}
           />
         </View>
         <View style={styles.buttonSubmit}>
@@ -102,7 +140,7 @@ const EditProfile = props => {
             type="text-icon"
             title="Simpan"
             icon="submit"
-            onPress={() => props.navigation.replace('MainApp')}
+            onPress={() => submit()}
           />
         </View>
       </ScrollView>

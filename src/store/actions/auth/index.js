@@ -64,7 +64,10 @@ export const loginUser = (email, password) => {
           errorMessage: '',
         },
       });
-      const auth = await FIREBASE.auth().signInWithEmailAndPassword(email, password);
+      const auth = await FIREBASE.auth().signInWithEmailAndPassword(
+        email,
+        password,
+      );
       const user = await FIREBASE.database()
         .ref('users/' + auth.user.uid)
         .once('value');

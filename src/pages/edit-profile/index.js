@@ -3,13 +3,13 @@ import {connect} from 'react-redux';
 import {StyleSheet, Text, View, ScrollView, Image, Alert} from 'react-native';
 import {ButtonComponent, Input, Picker} from '../../components';
 import {responsiveHeight, fonts, colors, responsiveWidth} from '../../utils';
-import {dummyProfile} from '../../data';
 import {getData} from '../../utils';
 import {DefaultUser} from '../../assets';
 import {getProvinceList, getCityList} from '../../store/actions';
 import {launchImageLibrary} from 'react-native-image-picker';
-
+import {updateProfile} from '../../store/actions';
 const EditProfile = props => {
+  const {loading, updateProfileData} = props;
   const [avatarBase64, setAvatarBase64] = useState('');
   const [dataUser, setDataUser] = useState({
     name: '',
@@ -21,6 +21,7 @@ const EditProfile = props => {
     city_id: '',
     avatar: '',
   });
+  const [updateProfile, setUpdateProfile] = useState(updateProfileData);
   const getDataUser = async () => {
     try {
       const data = await getData('user');
@@ -35,6 +36,14 @@ const EditProfile = props => {
     getDataUser();
     props.getProvinceList();
   }, []);
+  useEffect(() => {
+    console.log(updateProfileData, 'updateProfileData');
+    if (updateProfileData && updateProfileData != updateProfile) {
+      props.navigation.replace('MainApp');
+    } else if (updateProfileData) {
+      setUpdateProfile(updateProfileData);
+    }
+  }, [updateProfileData]);
   useEffect(() => {
     if (dataUser.province_id) {
       props.getCityList(dataUser.province_id);
@@ -60,7 +69,7 @@ const EditProfile = props => {
           const uri = image.uri;
           const base64 = `data:${image.type};base64,${image.base64}`;
           // console.log(uri, base64);
-          console.log(dataUser, "datUser")
+          console.log(dataUser, 'datUser');
           setDataUser({
             ...dataUser,
             avatar: uri,
@@ -72,11 +81,12 @@ const EditProfile = props => {
   };
   const submit = () => {
     const payload = {
-      ...dataUser
-    }
-    if(avatarBase64) payload.avatar = avatarBase64
-    console.log(payload)
-  }
+      ...dataUser,
+    };
+    if (avatarBase64) payload.avatar = avatarBase64;
+    // console.log(payload, "payload")
+    props.updateProfile(payload);
+  };
   return (
     <View style={styles.page}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -141,6 +151,7 @@ const EditProfile = props => {
             title="Simpan"
             icon="submit"
             onPress={() => submit()}
+            loading={loading}
           />
         </View>
       </ScrollView>
@@ -150,14 +161,14 @@ const EditProfile = props => {
 const mapStateToProps = state => ({
   provinceList: state.rajaOngkirReducer.getProvinceData,
   cityList: state.rajaOngkirReducer.getCityData,
-  // dataUser: state.authReducer.registerData,
-  // loading: state.authReducer.registerLoading,
-  // error: state.authReducer.registerError,
+  updateProfileData: state.updateProfileReducer.updateProfileData,
+  loading: state.updateProfileReducer.updateProfileLoading,
+  error: state.updateProfileReducer.updateProfileError,
 });
 const mapStateToDispatch = dispatch => ({
   getProvinceList: () => dispatch(getProvinceList()),
   getCityList: province_id => dispatch(getCityList(province_id)),
-  // registerUser: (data, password) => dispatch(registerUser(data, password)),
+  updateProfile: data => dispatch(updateProfile(data)),
 });
 export default connect(mapStateToProps, mapStateToDispatch)(EditProfile);
 

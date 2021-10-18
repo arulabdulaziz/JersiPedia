@@ -9,9 +9,9 @@ function updateProfileReducer(state = initialState, action) {
     case UPDATE_PROFILE:
       return {
         ...state,
-        registerData: action.payload.data,
-        registerLoading: action.payload.loading,
-        registerError: action.payload.errorMessage,
+        updateProfileData: action.payload.data,
+        updateProfileLoading: action.payload.loading,
+        updateProfileError: action.payload.errorMessage,
       };
     default:
       return state;

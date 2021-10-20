@@ -1,17 +1,17 @@
-import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
+import React from 'react';
+import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import {responsiveHeight, responsiveWidth} from '../../../utils';
 
-const CardLiga = (props) => {
-    const {liga} = props
-    return (
-        <TouchableOpacity style={styles.container} onPress={props.onPress}>
-            <Image source={liga.image} style={styles.logo}/>
-        </TouchableOpacity>
-    )
-}
+const CardLiga = props => {
+  const {liga} = props;
+  return (
+    <TouchableOpacity style={styles.container} onPress={props.onPress}>
+      <Image source={liga.image ? {uri: liga.image} : ''} style={styles.logo} />
+    </TouchableOpacity>
+  );
+};
 
-export default CardLiga
+export default CardLiga;
 
 const styles = StyleSheet.create({
   container: {
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     padding: 10,
     borderRadius: 15,
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   logo: {
     width: responsiveWidth(57),

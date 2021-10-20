@@ -1,11 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import {HeaderMainApp, ImageSlider} from '../../components';
 import {ListLiga, ListJersey, Distance} from '../../components';
 import {fonts, colors, responsiveHeight} from '../../utils';
 import {ButtonComponent} from '../../components';
 import {Slider1, Slider2} from '../../assets';
+import {connect} from 'react-redux';
+import {getListLiga} from '../../store/actions';
+
 const Home = props => {
+  useEffect(() => {
+    console.log('List Liga home');
+  }, []);
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -33,8 +39,15 @@ const Home = props => {
     </View>
   );
 };
-
-export default Home;
+const mapStateToProps = state => ({
+  listLiga: state.ligaReducer.listLigaData,
+  ligaError: state.ligaReducer.listLigaError,
+  ligaLoading: state.ligaReducer.listLigaLoading,
+});
+const mapStateToDispatch = dispatch => ({
+  getListLiga: () => dispatch(getListLiga()),
+});
+export default connect(mapStateToProps, mapStateToDispatch)(Home);
 
 const styles = StyleSheet.create({
   container: {

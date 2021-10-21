@@ -14,7 +14,7 @@ export const getListJersey = () => {
       .ref('jerseys')
       .once('value', querySnapShot => {
         let value = querySnapShot.val() ? querySnapShot.val() : null;
-        // console.log(value, "<<< value ligas");
+        // console.log(value, "<<< value jerseys");
         dispatchSuccess(dispatch, GET_LIST_JERSEY, value);
       })
       .catch(err => {
@@ -33,7 +33,7 @@ export const getListJerseyLimited = () => {
       .limitToLast(6)
       .once('value', querySnapShot => {
         let value = querySnapShot.val() ? querySnapShot.val() : null;
-        console.log(value, '<<< value jerseys');
+        // console.log(value, '<<< value jerseys');
         dispatchSuccess(dispatch, GET_LIST_JERSEY, value);
       })
       .catch(err => {

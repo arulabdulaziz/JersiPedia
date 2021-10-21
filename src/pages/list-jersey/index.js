@@ -1,9 +1,20 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import {HeaderMainApp} from '../../components';
 import {ListLiga, ListJersey, Distance} from '../../components';
 import {fonts, colors, responsiveHeight} from '../../utils';
+import {useIsFocused} from '@react-navigation/native';
+import {connect} from 'react-redux';
+import {getListJersey} from '../../store/actions';
+
 const ListJerseyPage = props => {
+  const isFocused = useIsFocused();
+useEffect(() => {
+  if (isFocused) {
+    console.log('List Jersey ListJerseyPage');
+    props.getListJersey();
+  }
+}, [isFocused]);
   return (
     <View style={styles.page}>
       <HeaderMainApp {...props} />
@@ -23,8 +34,11 @@ const ListJerseyPage = props => {
     </View>
   );
 };
-
-export default ListJerseyPage;
+const mapStateToDispatch = dispatch => ({
+  getListLiga: () => dispatch(getListLiga()),
+  getListJersey: () => dispatch(getListJersey()),
+});
+export default connect(null, mapStateToDispatch)(ListJerseyPage);
 
 const styles = StyleSheet.create({
   page: {

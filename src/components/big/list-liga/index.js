@@ -10,7 +10,7 @@ import {CardLiga} from '../../small';
 import {useIsFocused} from '@react-navigation/native';
 import {getListLiga} from '../../../store/actions';
 import {connect} from 'react-redux';
-import {colors} from '../../../utils';
+import {colors, responsiveWidth, widthMobileUI} from '../../../utils';
 
 const ListLiga = props => {
   const [ligas, setLigas] = useState([]);
@@ -74,6 +74,6 @@ const styles = StyleSheet.create({
   textCenter: {
     alignItems: 'center',
     textAlign: 'center',
-    width: '100%',
+    width: responsiveWidth(widthMobileUI),
   },
 });

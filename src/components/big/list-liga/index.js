@@ -1,10 +1,16 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
 import {CardLiga} from '../../small';
-import {dummyLigas} from '../../../data';
 import {useIsFocused} from '@react-navigation/native';
 import {getListLiga} from '../../../store/actions';
 import {connect} from 'react-redux';
+import {colors} from '../../../utils';
 
 const ListLiga = props => {
   const [ligas, setLigas] = useState([]);
@@ -26,9 +32,24 @@ const ListLiga = props => {
   return (
     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
       <View style={styles.container}>
-        {ligas.map(liga => (
+        {/* {ligas.map(liga => (
           <CardLiga key={liga.image} liga={liga} />
-        ))}
+        ))} */}
+        {props.ligaLoading ? (
+          <View style={styles.textCenter}>
+            <ActivityIndicator color={colors.primary} />
+          </View>
+        ) : props.ligaError ? (
+          <View style={styles.textCenter}>
+            <Text>{props.ligaError}</Text>
+          </View>
+        ) : ligas.length > 0 ? (
+          ligas.map(liga => <CardLiga key={liga.image} liga={liga} />)
+        ) : (
+          <View style={styles.textCenter}>
+            <Text style={styles.textCenter}>Data Kosong</Text>
+          </View>
+        )}
       </View>
     </ScrollView>
   );
@@ -49,5 +70,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: 10,
+  },
+  textCenter: {
+    alignItems: 'center',
+    textAlign: 'center',
+    width: '100%',
   },
 });

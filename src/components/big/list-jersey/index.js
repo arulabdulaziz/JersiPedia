@@ -1,8 +1,17 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, FlatList, RefreshControl} from 'react-native';
-import {dummyJerseys} from '../../../data';
-import {CardJersey} from '../..';
-const ListJersey = (props) => {
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  RefreshControl,
+  ActivityIndicator,
+} from 'react-native';
+import {CardJersey, Distance} from '../..';
+import {responsiveHeight} from '../../../utils';
+import {connect} from 'react-redux';
+import {colors} from '../../../utils';
+const ListJersey = props => {
   const [jerseys, setJerseys] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -12,18 +21,18 @@ const ListJersey = (props) => {
       setRefreshing(false);
     }, 3000);
   }, []);
-  useEffect(() => {
-    setJerseys(dummyJerseys);
-  }, []);
+  // useEffect(() => {
+  //   // setJerseys(dummyJerseys);
+  // }, []);
   return (
     <View style={styles.container}>
-      {jerseys.map(jersey => (
+      {/* {jerseys.map(jersey => (
         <CardJersey key={jersey.id} jersey={jersey} onPress={() => props.navigation.navigate("JerseyDetail", {jersey})}/>
-      ))}
+      ))} */}
       {/* <FlatList
         contentContainerStyle={styles.container2}
         data={jerseys}
-        // numColumns={2}
+        // numColumns={3}
         renderItem={({item}) => (
           <CardJersey
             jersey={item}
@@ -35,11 +44,47 @@ const ListJersey = (props) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       /> */}
+      {props.jerseyLoading ? (
+        <View style={styles.textCenter}>
+          <ActivityIndicator color={colors.primary} />
+        </View>
+      ) : props.jerseyError ? (
+        <View style={styles.textCenter}>
+          <Text>{props.jerseyError}</Text>
+        </View>
+      ) : props.listJersey ? (
+        <FlatList
+          contentContainerStyle={styles.container2}
+          data={Object.keys(props.listJersey).map(e => ({
+            ...props.listJersey[e],
+            uid: e,
+          }))}
+          // numColumns={3}
+          renderItem={({item}) => (
+            <CardJersey
+              jersey={item}
+              onPress={() => props.navigation.navigate('JerseyDetail', {item})}
+            />
+          )}
+          keyExtractor={item => item.uid}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        />
+      ) : (
+        <View style={styles.textCenter}>
+          <Text style={styles.textCenter}>Data Kosong</Text>
+        </View>
+      )}
     </View>
   );
 };
-
-export default ListJersey;
+const mapStateToProps = state => ({
+  listJersey: state.jerseyReducer.listJerseyData,
+  jerseyError: state.jerseyReducer.listJerseyError,
+  jerseyLoading: state.jerseyReducer.listJerseyLoading,
+});
+export default connect(mapStateToProps)(ListJersey);
 
 const styles = StyleSheet.create({
   container: {
@@ -52,5 +97,11 @@ const styles = StyleSheet.create({
     marginTop: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    flexWrap: 'wrap',
+  },
+  textCenter: {
+    alignItems: 'center',
+    textAlign: 'center',
+    width: "100%",
   },
 });

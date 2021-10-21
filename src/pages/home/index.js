@@ -6,12 +6,17 @@ import {fonts, colors, responsiveHeight} from '../../utils';
 import {ButtonComponent} from '../../components';
 import {Slider1, Slider2} from '../../assets';
 import {connect} from 'react-redux';
-import {getListLiga} from '../../store/actions';
+import {getListLiga, getListJerseyLimited} from '../../store/actions';
+import {useIsFocused} from '@react-navigation/native';
 
 const Home = props => {
+  const isFocused = useIsFocused();
   useEffect(() => {
-    console.log('List Liga home');
-  }, []);
+    if (isFocused) {
+      console.log('List Jersey home');
+      props.getListJerseyLimited();
+    }
+  }, [isFocused]);
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -46,6 +51,7 @@ const mapStateToProps = state => ({
 });
 const mapStateToDispatch = dispatch => ({
   getListLiga: () => dispatch(getListLiga()),
+  getListJerseyLimited: () => dispatch(getListJerseyLimited()),
 });
 export default connect(mapStateToProps, mapStateToDispatch)(Home);
 

@@ -3,10 +3,10 @@ import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import {HeaderMainApp} from '../../components';
 import {ListLiga, ListJersey, Distance} from '../../components';
 import {fonts, colors, responsiveHeight} from '../../utils';
-const ListJerseyPage = (props) => {
+const ListJerseyPage = props => {
   return (
     <View style={styles.page}>
-      <HeaderMainApp {...props}/>
+      <HeaderMainApp {...props} />
       <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
         <View style={styles.chooseLiga}>
           <ListLiga />
@@ -16,7 +16,7 @@ const ListJerseyPage = (props) => {
             Pilih <Text style={styles.boldLabel}>Jersey</Text> Yang Anda
             Inginkan
           </Text>
-          <ListJersey {...props}/>
+          <ListJersey {...props} />
         </View>
         <Distance height={+responsiveHeight(100)} />
       </ScrollView>
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   container: {
-    marginTop: -30
+    marginTop: -30,
   },
   chooseLiga: {
     marginHorizontal: 30,

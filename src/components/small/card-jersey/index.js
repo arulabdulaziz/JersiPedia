@@ -7,10 +7,19 @@ const CardJersey = props => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onPress} style={styles.card}>
-        <Image source={jersey.image[0]} style={styles.image} />
+        <Image
+          source={jersey.image[0] ? {uri: jersey.image[0]} : ''}
+          style={styles.image}
+        />
         <Text style={styles.label}>{jersey.name}</Text>
       </TouchableOpacity>
-      <ButtonComponent type="text" title="Detail" padding={7} fontSize={13} onPress={onPress}/>
+      <ButtonComponent
+        type="text"
+        title="Detail"
+        padding={7}
+        fontSize={13}
+        onPress={onPress}
+      />
     </View>
   );
 };

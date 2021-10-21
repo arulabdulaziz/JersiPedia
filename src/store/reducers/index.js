@@ -1,8 +1,9 @@
 import userReducer from './userReducer';
 import rajaOngkirReducer from './rajaOngkirReducer';
-import authReducer from "./authReducer"
+import authReducer from './authReducer';
 import updateProfileReducer from './profileReducer';
 import ligaReducer from './ligaReducer';
+import jerseyReducer from './jerseyReducer';
 import {combineReducers} from 'redux';
 
 const rootReducer = combineReducers({
@@ -11,5 +12,6 @@ const rootReducer = combineReducers({
   authReducer,
   updateProfileReducer,
   ligaReducer,
+  jerseyReducer,
 });
 export default rootReducer;

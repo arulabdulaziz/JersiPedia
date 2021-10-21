@@ -7,8 +7,6 @@ const initialState = {
 function jerseyReducer(state = initialState, action) {
   switch (action.type) {
     case GET_LIST_JERSEY:
-        console.log("reducer jersey", action.payload)
-        console.log("<<<<<<>>>>>>>>>>")
       return {
         ...state,
         listJerseyData: action.payload.data,

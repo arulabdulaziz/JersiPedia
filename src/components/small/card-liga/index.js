@@ -1,17 +1,26 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import {responsiveHeight, responsiveWidth} from '../../../utils';
-
+import {connect} from 'react-redux';
 const CardLiga = props => {
-  const {liga} = props;
+  const {liga, navigation, route} = props;
+  const toJerseyByLiga = () => {
+    const {uid, liga_name} = liga;
+    console.log(uid, liga_name)
+    if(route.name == "Home"){
+      navigation.navigate('ListJersey');
+    }else{
+      console.log(route)
+    }
+  };
   return (
-    <TouchableOpacity style={styles.container} onPress={props.onPress}>
+    <TouchableOpacity style={styles.container} onPress={() => toJerseyByLiga()}>
       <Image source={liga.image ? {uri: liga.image} : ''} style={styles.logo} />
     </TouchableOpacity>
   );
 };
 
-export default CardLiga;
+export default connect()(CardLiga);
 
 const styles = StyleSheet.create({
   container: {

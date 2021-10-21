@@ -20,7 +20,7 @@ useEffect(() => {
       <HeaderMainApp {...props} />
       <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
         <View style={styles.chooseLiga}>
-          <ListLiga />
+          <ListLiga {...props}/>
         </View>
         <View style={styles.listJersey}>
           <Text style={styles.label}>

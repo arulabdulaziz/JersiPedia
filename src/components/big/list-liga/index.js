@@ -22,7 +22,7 @@ const ListLiga = props => {
       props.getListLiga();
     } else if (props.listLiga && isFocused) {
       const keys = Object.keys(props.listLiga);
-      setLigas(keys.map(e => props.listLiga[e]));
+      setLigas(keys.map(e => ({...props.listLiga[e], uid: e})));
     }
   }, [props.listLiga, isFocused]);
   // useEffect(() => {
@@ -44,7 +44,14 @@ const ListLiga = props => {
             <Text>{props.ligaError}</Text>
           </View>
         ) : ligas.length > 0 ? (
-          ligas.map(liga => <CardLiga key={liga.image} liga={liga} />)
+          ligas.map(liga => (
+            <CardLiga
+              key={liga.image}
+              liga={liga}
+              navigation={props.navigation}
+              route={props.route}
+            />
+          ))
         ) : (
           <View style={styles.textCenter}>
             <Text style={styles.textCenter}>Data Kosong</Text>

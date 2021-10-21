@@ -24,7 +24,7 @@ const Home = props => {
         <ImageSlider image={[Slider1, Slider2]} />
         <View style={styles.chooseLiga}>
           <Text style={styles.label}>Pilih Liga</Text>
-          <ListLiga />
+          <ListLiga {...props} />
         </View>
         <View style={styles.chooseLiga}>
           <Text style={styles.label}>

@@ -10,7 +10,7 @@ export const GET_DETAIL_LIGA = 'GET_DETAIL_LIGA';
 export const getListLiga = () => {
   return dispatch => {
     dispatchLoading(dispatch, GET_LIST_LIGA, null);
-    console.log("value, ligas")
+    // console.log("value, ligas")
     FIREBASE.database()
       .ref('ligas')
       .once('value', querySnapShot => {

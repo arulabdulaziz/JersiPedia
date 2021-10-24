@@ -19,6 +19,7 @@ const HeaderMainApp = props => {
     props.setKeyword(search);
     if (props.route.name != 'ListJersey')
       props.navigation.navigate('ListJersey');
+    else props.getListJersey();
   };
   return (
     <View style={styles.container}>

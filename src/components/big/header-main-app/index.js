@@ -1,25 +1,55 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, TextInput} from 'react-native';
 import {colors, responsiveHeight, fonts} from '../../../utils';
 import {IconSearch} from '../../../assets';
-import { Distance } from '../../small';
-import {ButtonComponent} from "../../small"
-const HeaderMainApp = ({navigation}) => {
+import {Distance} from '../../small';
+import {ButtonComponent} from '../../small';
+import {connect} from 'react-redux';
+import {setKeyword, deleteLiga} from '../../../store/actions';
+import {useIsFocused} from '@react-navigation/native';
+
+const HeaderMainApp = props => {
+  const isFocused = useIsFocused();
+  const [search, setSearch] = useState('');
+  useEffect(() => {
+    if (props.route.name == 'ListJersey') setSearch(props.keyword);
+    else setSearch('');
+  }, [isFocused, props.keyword]);
+  const finishSearch = () => {
+    props.setKeyword(search);
+    if (props.route.name != 'ListJersey')
+      props.navigation.navigate('ListJersey');
+  };
   return (
     <View style={styles.container}>
       <View style={styles.wrapper}>
         <View style={styles.searchSection}>
           <IconSearch />
-          <TextInput style={styles.input} placeholder="Cari Jersey. . ." />
+          <TextInput
+            style={styles.input}
+            placeholder="Cari Jersey. . ."
+            value={search}
+            onChangeText={value => setSearch(value)}
+            onSubmitEditing={() => finishSearch()}
+          />
         </View>
         <Distance width={10} />
-        <ButtonComponent padding={10} onPress={() => navigation.navigate("Chart")}/>
+        <ButtonComponent
+          padding={10}
+          onPress={() => props.navigation.navigate('Chart')}
+        />
       </View>
     </View>
   );
 };
-
-export default HeaderMainApp;
+const mapStateToProps = state => ({
+  keyword: state.jerseyReducer.keyword,
+});
+const mapStateToDispatch = dispatch => ({
+  setKeyword: keyword => dispatch(setKeyword(keyword)),
+  deleteLiga: () => dispatch(deleteLiga()),
+});
+export default connect(mapStateToProps, mapStateToDispatch)(HeaderMainApp);
 
 const styles = StyleSheet.create({
   container: {

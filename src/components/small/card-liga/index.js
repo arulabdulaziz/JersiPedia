@@ -2,15 +2,19 @@ import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import {responsiveHeight, responsiveWidth} from '../../../utils';
 import {connect} from 'react-redux';
+import {setLiga, getListJersey, deleteKeyword} from '../../../store/actions';
 const CardLiga = props => {
   const {liga, navigation, route} = props;
   const toJerseyByLiga = () => {
+    console.log('toJerseyByLiga');
+    props.deleteKeyword();
     const {uid, liga_name} = liga;
-    console.log(uid, liga_name)
-    if(route.name == "Home"){
+    props.setLiga(uid, liga_name);
+    console.log(uid, liga_name);
+    if (route.name == 'Home') {
       navigation.navigate('ListJersey');
-    }else{
-      console.log(route)
+    } else {
+      props.getListJersey();
     }
   };
   return (
@@ -19,8 +23,12 @@ const CardLiga = props => {
     </TouchableOpacity>
   );
 };
-
-export default connect()(CardLiga);
+const mapStateToDispatch = dispatch => ({
+  setLiga: (id, name) => dispatch(setLiga(id, name)),
+  getListJersey: () => dispatch(getListJersey()),
+  deleteKeyword: () => dispatch(deleteKeyword()),
+});
+export default connect(null, mapStateToDispatch)(CardLiga);
 
 const styles = StyleSheet.create({
   container: {

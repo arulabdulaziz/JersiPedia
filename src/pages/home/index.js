@@ -13,7 +13,7 @@ const Home = props => {
   const isFocused = useIsFocused();
   useEffect(() => {
     if (isFocused) {
-      console.log('List Jersey home');
+      // console.log('List Jersey home');
       props.getListJerseyLimited();
     }
   }, [isFocused]);
@@ -48,6 +48,7 @@ const mapStateToProps = state => ({
   listLiga: state.ligaReducer.listLigaData,
   ligaError: state.ligaReducer.listLigaError,
   ligaLoading: state.ligaReducer.listLigaLoading,
+  keyword: state.jerseyReducer.keyword,
 });
 const mapStateToDispatch = dispatch => ({
   getListLiga: () => dispatch(getListLiga()),

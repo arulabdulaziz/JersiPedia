@@ -1,31 +1,34 @@
-import React,{useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import {HeaderMainApp} from '../../components';
 import {ListLiga, ListJersey, Distance} from '../../components';
 import {fonts, colors, responsiveHeight} from '../../utils';
 import {useIsFocused} from '@react-navigation/native';
 import {connect} from 'react-redux';
-import {getListJersey} from '../../store/actions';
+import {getListJersey, deleteLiga, deleteKeyword} from '../../store/actions';
 
 const ListJerseyPage = props => {
   const isFocused = useIsFocused();
-useEffect(() => {
-  if (isFocused) {
-    console.log('List Jersey ListJerseyPage');
-    props.getListJersey();
-  }
-}, [isFocused]);
+  useEffect(() => {
+    if (isFocused) {
+      // console.log('List Jersey ListJerseyPage');
+      props.getListJersey();
+    } else {
+      props.deleteLiga();
+      props.deleteKeyword();
+    }
+  }, [isFocused]);
   return (
     <View style={styles.page}>
-      <HeaderMainApp {...props} />
+      <HeaderMainApp {...props}  />
       <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
         <View style={styles.chooseLiga}>
-          <ListLiga {...props}/>
+          <ListLiga {...props} />
         </View>
         <View style={styles.listJersey}>
           <Text style={styles.label}>
-            Pilih <Text style={styles.boldLabel}>Jersey</Text> Yang Anda
-            Inginkan
+            Pilih <Text style={styles.boldLabel}>Jersey</Text>{' '}
+            {props.ligaName ? props.ligaName : 'Yang Anda Inginkan'}
           </Text>
           <ListJersey {...props} />
         </View>
@@ -34,11 +37,18 @@ useEffect(() => {
     </View>
   );
 };
+const mapStateToProps = state => ({
+  ligaId: state.jerseyReducer.ligaId,
+  ligaName: state.jerseyReducer.ligaName,
+  keyword: state.jerseyReducer.keyword,
+});
 const mapStateToDispatch = dispatch => ({
   getListLiga: () => dispatch(getListLiga()),
   getListJersey: () => dispatch(getListJersey()),
+  deleteLiga: () => dispatch(deleteLiga()),
+  deleteKeyword: () => dispatch(deleteKeyword()),
 });
-export default connect(null, mapStateToDispatch)(ListJerseyPage);
+export default connect(mapStateToProps, mapStateToDispatch)(ListJerseyPage);
 
 const styles = StyleSheet.create({
   page: {

@@ -63,7 +63,7 @@ const ListJersey = props => {
           renderItem={({item}) => (
             <CardJersey
               jersey={item}
-              onPress={() => props.navigation.navigate('JerseyDetail', {item})}
+              onPress={() => props.navigation.navigate('JerseyDetail', {jersey: item})}
             />
           )}
           keyExtractor={item => item.uid}

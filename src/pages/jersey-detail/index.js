@@ -26,6 +26,13 @@ import {
 import {RFValue} from 'react-native-responsive-fontsize';
 const JerseyDetail = props => {
   const {jersey} = props.route.params;
+  // return (
+  //   <View>
+  //     <Text>JErsey Detail</Text>
+  //     <Text>{JSON.stringify(jersey)} jersey params</Text>
+  //     <Text>{JSON.stringify(props)}</Text>
+  //   </View>
+  // )
   return (
     // <ScrollView style={styles.scrollView}>
     <View style={styles.page}>

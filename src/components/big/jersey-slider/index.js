@@ -22,14 +22,17 @@ const JerseySlider = props => {
           setPreviewImage(true);
         }}
       />
-      <Modal visible={previewImage} transparent={true}>
+      <Modal
+        visible={previewImage}
+        transparent={true}
+        onRequestClose={() => setPreviewImage(false)}>
         <ImageViewer
           index={indexImagePreview}
           enableImageZoom={true}
           imageUrls={images.map(e => ({
-            url: '',
+            url: e,
             props: {
-              source: e,
+              // source: e,
             },
           }))}
           backgroundColor={colors.primary}

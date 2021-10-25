@@ -11,7 +11,7 @@ const CardLiga = props => {
     const {uid, liga_name} = liga;
     props.setLiga(uid, liga_name);
     console.log(uid, liga_name);
-    if (route.name == 'Home') {
+    if (route.name != 'ListJersey') {
       navigation.navigate('ListJersey');
     } else {
       props.getListJersey();

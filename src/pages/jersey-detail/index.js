@@ -6,6 +6,7 @@ import {
   Image,
   ScrollView,
   Dimensions,
+  Alert,
 } from 'react-native';
 import {
   colors,
@@ -27,13 +28,14 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import {useIsFocused} from '@react-navigation/native';
 import {connect} from 'react-redux';
 import {getDetailLiga, deleteDetailLiga} from '../../store/actions';
-import {unstable_continueExecution} from 'scheduler';
+import {getData} from '../../utils';
 const JerseyDetail = props => {
   const {jersey} = props.route.params;
   const [sizeOptions, setSizeOptions] = useState(['S', 'M', 'L', 'XL', 'XXL']);
   const [size, setSize] = useState('L');
   const [amount, setAmount] = useState(1);
   const [note, setNote] = useState('');
+  const [loading, setLoading] = useState(false);
   const isFocused = useIsFocused();
   useEffect(() => {
     if (isFocused) {
@@ -42,6 +44,22 @@ const JerseyDetail = props => {
       props.deleteDetailLiga();
     }
   }, [isFocused]);
+  const addToChart = async () => {
+    try {
+      setLoading(true);
+      const user = await getData('user');
+      if (user.uid) {
+        console.log(user, '<< user');
+      }else{
+        throw {}
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Silakan Login untuk melanjutkan');
+      props.navigation.replace('Login');
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     // <ScrollView style={styles.scrollView}>
     <View style={styles.page}>
@@ -56,7 +74,11 @@ const JerseyDetail = props => {
       <View style={styles.container}>
         {props.liga && (
           <View style={styles.liga}>
-            <CardLiga liga={props.liga} navigation={props.navigation} route={props.route}/>
+            <CardLiga
+              liga={props.liga}
+              navigation={props.navigation}
+              route={props.route}
+            />
           </View>
         )}
         <ScrollView style={styles.desc} showsVerticalScrollIndicator={false}>
@@ -77,7 +99,7 @@ const JerseyDetail = props => {
               height={responsiveHeight(43)}
               fontSize={13}
               onChangeText={value => {
-                if (value < 0 || !value) setAmount(1);
+                if (+value < 0 || !value) setAmount(1);
                 else setAmount(+value);
               }}
               value={amount.toString()}
@@ -107,7 +129,8 @@ const JerseyDetail = props => {
             title="Masukkan Keranjang"
             icon="chart-white"
             padding={responsiveHeight(17)}
-            onPress={() => props.navigation.navigate('Chart')}
+            onPress={() => addToChart()}
+            loading={loading}
           />
         </ScrollView>
       </View>

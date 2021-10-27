@@ -2,12 +2,13 @@ import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, FlatList} from 'react-native';
 import {CardChart} from '../..';
 const ListChart = props => {
-  const {chart} = props
+  const {orders} = props
   return (
     <View style={styles.container}>
-      {chart.orders.map((chart, i) => (
+      {/* {orders.map((chart, i) => (
         <CardChart key={i} chart={chart}/>
-      ))}
+      ))} */}
+      <CardChart chart={orders} />
     </View>
   );
 };

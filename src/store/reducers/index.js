@@ -4,6 +4,7 @@ import authReducer from './authReducer';
 import updateProfileReducer from './profileReducer';
 import ligaReducer from './ligaReducer';
 import jerseyReducer from './jerseyReducer';
+import chartReducer from './chartReducer';
 import {combineReducers} from 'redux';
 
 const rootReducer = combineReducers({
@@ -13,5 +14,6 @@ const rootReducer = combineReducers({
   updateProfileReducer,
   ligaReducer,
   jerseyReducer,
+  chartReducer,
 });
 export default rootReducer;

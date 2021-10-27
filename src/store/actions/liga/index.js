@@ -1,6 +1,5 @@
 import FIREBASE from '../../../config/FIREBASE';
 import {
-  storeData,
   dispatchLoading,
   dispatchSuccess,
   dispatchError,

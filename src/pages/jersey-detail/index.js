@@ -27,7 +27,7 @@ import {
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useIsFocused} from '@react-navigation/native';
 import {connect} from 'react-redux';
-import {getDetailLiga, deleteDetailLiga} from '../../store/actions';
+import {getDetailLiga, deleteDetailLiga, addToChart} from '../../store/actions';
 import {getData} from '../../utils';
 const JerseyDetail = props => {
   const {jersey} = props.route.params;
@@ -44,14 +44,21 @@ const JerseyDetail = props => {
       props.deleteDetailLiga();
     }
   }, [isFocused]);
-  const addToChart = async () => {
+  const addToChartJersey = async () => {
     try {
       setLoading(true);
       const user = await getData('user');
       if (user.uid) {
-        console.log(user, '<< user');
-      }else{
-        throw {}
+        const payload = {
+          uid: user.uid,
+          jersey,
+          amount,
+          note,
+          size,
+        };
+        props.addToChart(payload);
+      } else {
+        throw {};
       }
     } catch (error) {
       Alert.alert('Error', 'Silakan Login untuk melanjutkan');
@@ -129,8 +136,8 @@ const JerseyDetail = props => {
             title="Masukkan Keranjang"
             icon="chart-white"
             padding={responsiveHeight(17)}
-            onPress={() => addToChart()}
-            loading={loading}
+            onPress={() => addToChartJersey()}
+            loading={props.addChartLoading}
           />
         </ScrollView>
       </View>
@@ -142,10 +149,14 @@ const mapStateToProps = state => ({
   liga: state.ligaReducer.detailLigaData,
   loadingLiga: state.ligaReducer.detailLigaLoading,
   ligaError: state.ligaReducer.detailLigaError,
+  addChartLoading: state.chartReducer.addChartLoading,
+  addChartResult: state.chartReducer.addChartResult,
+  addChartError: state.chartReducer.addChartError,
 });
 const mapStateToDispatch = dispatch => ({
   deleteDetailLiga: () => dispatch(deleteDetailLiga()),
   getDetailLiga: id => dispatch(getDetailLiga(id)),
+  addToChart: data => dispatch(addToChart(data)),
 });
 export default connect(mapStateToProps, mapStateToDispatch)(JerseyDetail);
 const windowHeight = Dimensions.get('window').height;

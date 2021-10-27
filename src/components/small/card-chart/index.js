@@ -25,7 +25,7 @@ const CardChart = props => {
         fontSize={13}
         onPress={onPress}
       /> */}
-      <Image source={chart.product.images[0]} style={styles.image} />
+      <Image source={chart.product.image[0] ? {uri: chart.product.image[0]} : ''} style={styles.image} />
       <View>
         <View>
           <Text style={styles.name}>{chart.product.name}</Text>

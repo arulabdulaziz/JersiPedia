@@ -1,7 +1,13 @@
-import React from 'react';
-import {StyleSheet, Text, View, FlatList, RefreshControl} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  RefreshControl,
+  Alert,
+} from 'react-native';
 import {ListChart, Distance, ButtonComponent} from '../../components';
-import {dummyOrders} from '../../data';
 import {
   colors,
   responsiveHeight,
@@ -10,25 +16,43 @@ import {
   numberWithCommas,
 } from '../../utils';
 import {RFValue} from 'react-native-responsive-fontsize';
+import {connect} from 'react-redux';
+import {getListChart} from '../../store/actions';
+import {getData} from '../../utils';
+import {useIsFocused} from '@react-navigation/core';
 const Chart = props => {
-  const [refreshing, setRefreshing] = React.useState(false);
-
+  const isFocused = useIsFocused();
   const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 3000);
+    getCharts();
   }, []);
+  useEffect(() => {
+    if (isFocused) {
+      onRefresh();
+    }
+  }, [isFocused]);
+  const getCharts = async () => {
+    try {
+      const user = await getData('user');
+      if (user.uid) {
+        props.getListChart(user.uid);
+      } else {
+        throw 'Silakan Login Untuk Melanjutkan';
+      }
+    } catch (error) {
+      Alert.alert('Error', JSON.stringify(error));
+      props.navigation.replace('Login');
+    }
+  };
   return (
     <View style={styles.page}>
       <View style={styles.container}>
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={dummyOrders.filter(e => e.status == 'chart')}
-          renderItem={({item}) => <ListChart {...props} chart={item} />}
+          data={props.listChart.orders}
+          renderItem={({item}) => <ListChart {...props} orders={item} />}
           keyExtractor={item => item.id}
           refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            <RefreshControl refreshing={props.loading} onRefresh={onRefresh} />
           }
         />
       </View>
@@ -37,13 +61,7 @@ const Chart = props => {
         <View style={styles.totalPrice}>
           <Text style={styles.textBold}>Total Harga:</Text>
           <Text style={styles.textBold}>
-            Rp.{' '}
-            {numberWithCommas(
-              dummyOrders
-                .filter(e => e.status == 'chart')
-                .map(e => e.total_price)
-                .reduce((a, b) => a + b, 0),
-            )}
+            Rp. {numberWithCommas(props.listChart?.total_price ?? 0)}
           </Text>
         </View>
         <ButtonComponent
@@ -57,8 +75,15 @@ const Chart = props => {
     </View>
   );
 };
-
-export default Chart;
+const mapStateToProps = state => ({
+  loading: state.chartReducer.listChartLoading,
+  listChart: state.chartReducer.listChartData,
+  listChartError: state.chartReducer.listChartError,
+});
+const mapStateToDispatch = dispatch => ({
+  getListChart: id => dispatch(getListChart(id)),
+});
+export default connect(mapStateToProps, mapStateToDispatch)(Chart);
 
 const styles = StyleSheet.create({
   page: {

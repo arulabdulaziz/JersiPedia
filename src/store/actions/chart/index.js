@@ -94,7 +94,7 @@ export const getListChart = id => {
       .once('value', querySnapshot => {
         const result = querySnapshot.val();
         result.orders = Object.keys(result.orders)
-          .map(e => result.orders[e])
+          .map(e => ({...result.orders[e], uid: e}))
           // .map(e => Object.keys(e).map(e2 => e[e2]));
         dispatchSuccess(dispatch, GET_LIST_CHART, result);
       })

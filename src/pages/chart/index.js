@@ -70,6 +70,7 @@ const Chart = props => {
           padding={responsiveHeight(17)}
           fontSize={18}
           onPress={() => props.navigation.navigate('Checkout')}
+          loading={props.loading}
         />
       </View>
     </View>

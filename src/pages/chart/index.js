@@ -20,6 +20,7 @@ import {connect} from 'react-redux';
 import {getListChart} from '../../store/actions';
 import {getData} from '../../utils';
 import {useIsFocused} from '@react-navigation/core';
+import Spinner from 'react-native-loading-spinner-overlay';
 const Chart = props => {
   const isFocused = useIsFocused();
   const onRefresh = React.useCallback(() => {
@@ -45,18 +46,18 @@ const Chart = props => {
   };
   return (
     <View style={styles.page}>
+
       <View style={styles.container}>
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={props.listChart.orders}
+          data={props.listChart?.orders ?? []}
           renderItem={({item}) => <ListChart {...props} orders={item} />}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.uid}
           refreshControl={
             <RefreshControl refreshing={props.loading} onRefresh={onRefresh} />
           }
         />
       </View>
-
       <View style={styles.footer}>
         <View style={styles.totalPrice}>
           <Text style={styles.textBold}>Total Harga:</Text>
@@ -87,6 +88,9 @@ const mapStateToDispatch = dispatch => ({
 export default connect(mapStateToProps, mapStateToDispatch)(Chart);
 
 const styles = StyleSheet.create({
+  spinnerTextStyle: {
+    color: colors.primary,
+  },
   page: {
     flex: 1,
     backgroundColor: 'white',

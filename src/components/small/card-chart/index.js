@@ -8,12 +8,24 @@ import {
   responsiveHeight,
   numberWithCommas,
 } from '../../../utils';
-import ButtonComponent from '../button-component';
 import {Distance} from '..';
+import {connect} from 'react-redux';
+import {deleteChart} from '../../../store/actions';
+import Spinner from 'react-native-loading-spinner-overlay';
+
 const CardChart = props => {
   const {chart, onPress} = props;
+  const removeChart = () => {
+    props.deleteChart(chart);
+  };
   return (
     <View style={styles.container}>
+      <Spinner
+        visible={props.deleteChartLoading}
+        textContent={'Loading...'}
+        textStyle={styles.spinnerTextStyle}
+        color={colors.primary}
+      />
       {/* <TouchableOpacity onPress={onPress} style={styles.card}>
         <Image source={jersey.image[0]} style={styles.image} />
         <Text style={styles.label}>{jersey.name}</Text>
@@ -25,7 +37,10 @@ const CardChart = props => {
         fontSize={13}
         onPress={onPress}
       /> */}
-      <Image source={chart.product.image[0] ? {uri: chart.product.image[0]} : ''} style={styles.image} />
+      <Image
+        source={chart.product.image[0] ? {uri: chart.product.image[0]} : ''}
+        style={styles.image}
+      />
       <View>
         <View>
           <Text style={styles.name}>{chart.product.name}</Text>
@@ -51,18 +66,24 @@ const CardChart = props => {
           <Text style={styles.text}>{chart.desc}</Text>
         </View>
       </View>
-      <TouchableOpacity
-        style={styles.iconDelete}
-        onPress={() => alert('Hello')}>
+      <TouchableOpacity style={styles.iconDelete} onPress={() => removeChart()}>
         <IconDelete />
       </TouchableOpacity>
     </View>
   );
 };
-
-export default CardChart;
+const mapStateToProps = state => ({
+  deleteChartLoading: state.chartReducer.deleteChartLoading,
+});
+const mapStateToDispatch = dispatch => ({
+  deleteChart: chart => dispatch(deleteChart(chart)),
+});
+export default connect(mapStateToProps, mapStateToDispatch)(CardChart);
 
 const styles = StyleSheet.create({
+  spinnerTextStyle: {
+    color: colors.primary,
+  },
   container: {
     flexDirection: 'row',
     marginTop: 15,

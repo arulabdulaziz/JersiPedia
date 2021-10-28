@@ -1,4 +1,10 @@
-import {GET_LIST_JERSEY, SET_LIGA, DELETE_LIGA, SET_KEYWORD, DELETE_KEYWORD} from '../actions/jersey';
+import {
+  GET_LIST_JERSEY,
+  SET_LIGA,
+  DELETE_LIGA,
+  SET_KEYWORD,
+  DELETE_KEYWORD,
+} from '../actions/jersey';
 const initialState = {
   listJerseyData: null,
   listJerseyLoading: false,
@@ -8,6 +14,7 @@ const initialState = {
   ligaName: '',
 
   keyword: '',
+
 };
 function jerseyReducer(state = initialState, action) {
   switch (action.type) {

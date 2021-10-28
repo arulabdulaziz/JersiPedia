@@ -1,4 +1,4 @@
-import { ADD_TO_CHART, GET_LIST_CHART } from "../actions";
+import { ADD_TO_CHART, GET_LIST_CHART, LOADING_DELETE_CHART } from "../actions";
 const initialState = {
   addChartLoading: false,
   addChartResult: [],
@@ -7,6 +7,8 @@ const initialState = {
   listChartData: [],
   listChartLoading: false,
   listChartError: '',
+
+  deleteChartLoading: false,
 };
 export default function (state = initialState, action) {
   switch (action.type) {
@@ -23,6 +25,11 @@ export default function (state = initialState, action) {
         listChartLoading: action.payload.loading,
         listChartData: action.payload.data,
         listChartError: action.payload.errorMessage,
+      };
+    case LOADING_DELETE_CHART:
+      return {
+        ...state,
+        deleteChartLoading: action.payload.loading,
       };
     default:
       return state;

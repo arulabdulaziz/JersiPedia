@@ -47,6 +47,7 @@ const JerseyDetail = props => {
   const addToChartJersey = async () => {
     try {
       setLoading(true);
+      if(!amount || +amount < 1) setAmount(1)
       const user = await getData('user');
       if (user.uid) {
         const payload = {
@@ -106,8 +107,11 @@ const JerseyDetail = props => {
               height={responsiveHeight(43)}
               fontSize={13}
               onChangeText={value => {
-                if (+value < 0 || !value) setAmount(1);
-                else setAmount(+value);
+                setAmount(value);
+              }}
+              onSubmitEditing={() => {
+                if (!amount || +amount < 1) setAmount(1);
+                else setAmount(+amount)
               }}
               value={amount.toString()}
             />
@@ -137,7 +141,7 @@ const JerseyDetail = props => {
             icon="chart-white"
             padding={responsiveHeight(17)}
             onPress={() => addToChartJersey()}
-            loading={props.addChartLoading}
+            loading={props.addChartLoading || loading}
           />
         </ScrollView>
       </View>

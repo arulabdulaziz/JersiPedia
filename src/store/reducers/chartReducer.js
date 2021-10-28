@@ -4,7 +4,7 @@ const initialState = {
   addChartResult: [],
   addChartError: '',
 
-  listChartData: [],
+  listChartData: null,
   listChartLoading: false,
   listChartError: '',
 

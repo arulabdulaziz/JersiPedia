@@ -3,11 +3,11 @@ import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {IconChart, IconBack} from '../../../assets';
 import TextIcon from './TextIcon';
 import TextOnly from './TextOnly';
-import TextLoading from "./TextLoading"
+import TextLoading from './TextLoading';
 const ButtonComponent = props => {
   const {onPress, padding, totalChart, type, icon, loading} = props;
-  if(loading){
-    return <TextLoading {...props}/>
+  if (loading) {
+    return <TextLoading {...props} />;
   }
   const Icon = () => {
     switch (icon) {
@@ -24,16 +24,21 @@ const ButtonComponent = props => {
   } else if (type == 'text-icon') {
     return <TextIcon {...props} />;
   }
+  const Notif = () => {
+    if (totalChart)
+      return (
+        <View style={styles.notif}>
+          <Text style={styles.textNotif}>{totalChart}</Text>
+        </View>
+      );
+    return <View></View>;
+  };
   return (
     <TouchableOpacity
       onPress={onPress}
       style={styles.container(padding ? padding : 0)}>
       <Icon />
-      {totalChart && (
-        <View style={styles.notif}>
-          <Text style={styles.textNotif}>{totalChart}</Text>
-        </View>
-      )}
+      <Notif />
     </TouchableOpacity>
   );
 };

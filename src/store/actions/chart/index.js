@@ -16,7 +16,8 @@ export const addToChart = data => {
           const mainChart = querySnapshot.val();
           const newWeight =
             parseInt(+data.amount) * parseFloat(+data.jersey.weight);
-          const newPrice = parseInt(+data.amount) * parseInt(+data.jersey.price);
+          const newPrice =
+            parseInt(+data.amount) * parseInt(+data.jersey.price);
 
           FIREBASE.database()
             .ref('charts')
@@ -58,7 +59,7 @@ export const addToChart = data => {
   };
 };
 export const addChartDetail = data => {
-  return dispatch => {
+  return (dispatch, getState) => {
     const orders = {
       product: data.jersey,
       total_order: data.amount,
@@ -77,7 +78,13 @@ export const addChartDetail = data => {
           text: 'Berhasil Menambahkan Ke Keranjang',
           duration: Snackbar.LENGTH_SHORT,
         });
+        const charts = getState().chartReducer.listChartData
+        let newChart = {}
+        if(charts) newChart = {...charts}
+        else newChart ={orders: []}
+        newChart.orders.push(orders);
         dispatchSuccess(dispatch, ADD_TO_CHART, response ? response : []);
+        dispatchSuccess(dispatch, GET_LIST_CHART, newChart);
       })
       .catch(error => {
         dispatchError(dispatch, ADD_TO_CHART, error, []);
@@ -92,11 +99,11 @@ export const getListChart = id => {
     FIREBASE.database()
       .ref('charts/' + id)
       .once('value', querySnapshot => {
-        const response = querySnapshot.val() ? querySnapshot.val():null;
+        const response = querySnapshot.val() ? querySnapshot.val() : null;
         let result = null;
         if (response) {
           result = {...response, uid: id};
-          if(result.orders){
+          if (result.orders) {
             result.orders = Object.keys(result.orders).map(e => ({
               ...result.orders[e],
               uid: e,
@@ -154,7 +161,8 @@ export const deleteChart = chart => {
         })
         .catch(error => {
           alert(JSON.stringify(error));
-        }).finally(_ => {
+        })
+        .finally(_ => {
           dispatch({type: LOADING_DELETE_CHART, payload: {loading: false}});
         });
     }

@@ -20,7 +20,6 @@ import {connect} from 'react-redux';
 import {getListChart} from '../../store/actions';
 import {getData} from '../../utils';
 import {useIsFocused} from '@react-navigation/core';
-import Spinner from 'react-native-loading-spinner-overlay';
 const Chart = props => {
   const isFocused = useIsFocused();
   const onRefresh = React.useCallback(() => {

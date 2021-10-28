@@ -14,12 +14,14 @@ import {
   fonts,
   heightMobileUI,
   numberWithCommas,
+  getData,
 } from '../../utils';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {connect} from 'react-redux';
 import {getListChart} from '../../store/actions';
-import {getData} from '../../utils';
 import {useIsFocused} from '@react-navigation/core';
+import Snackbar from 'react-native-snackbar';
+
 const Chart = props => {
   const isFocused = useIsFocused();
   const onRefresh = React.useCallback(() => {
@@ -45,7 +47,6 @@ const Chart = props => {
   };
   return (
     <View style={styles.page}>
-
       <View style={styles.container}>
         <FlatList
           showsVerticalScrollIndicator={false}
@@ -69,7 +70,23 @@ const Chart = props => {
           title="Checkout"
           padding={responsiveHeight(17)}
           fontSize={18}
-          onPress={() => props.navigation.navigate('Checkout')}
+          onPress={() =>
+            {
+              const total_price = props.listChart?.total_price ?? 0
+              const total_weight = props.listChart?.total_weight ?? 0
+              if (total_price && total_weight) {
+                props.navigation.navigate('Checkout', {
+                  total_price,
+                  total_weight,
+                });
+              } else {
+                Snackbar.show({
+                  text: 'Anda belum memiliki keranjang untuk di checkout',
+                  duration: Snackbar.LENGTH_SHORT,
+                });
+              }
+            }
+          }
           loading={props.loading}
         />
       </View>

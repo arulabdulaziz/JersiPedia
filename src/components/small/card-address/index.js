@@ -8,7 +8,7 @@ const CardAddress = ({profile, navigation}) => {
       <Text style={styles.address}>{profile.address}</Text>
       <Text style={styles.address}>Kota/Kab. {profile.city}</Text>
       <Text style={styles.address}>Provinsi {profile.province}</Text>
-      <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+      <TouchableOpacity onPress={() => navigation.navigate('EditProfile')}>
         <Text style={styles.changeAddress}>Ubah Alamat</Text>
       </TouchableOpacity>
     </View>

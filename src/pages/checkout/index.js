@@ -13,14 +13,20 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import {ButtonComponent, CardAddress, Picker, Distance} from '../../components';
 import {useIsFocused} from '@react-navigation/core';
 import {connect} from 'react-redux';
-import { getProvinceList, getCityList } from '../../store/actions';
+import {
+  getProvinceList,
+  getCityList,
+  getCourierList,
+} from '../../store/actions';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 const Checkout = props => {
   const isFocused = useIsFocused();
   const [profile, setProfile] = useState({});
-  const [address, setAddress] = useState({});
-  const [loading, setLoading] =useState(false)
+  const [province, setProvince] = useState('');
+  const [city, setCity] = useState('');
+  const [courierSelected, setCourierSelected] = useState(null)
+  const [loading, setLoading] = useState(false);
   const {total_weight, total_price} = props.route.params;
   const getDataUser = async () => {
     try {
@@ -29,60 +35,85 @@ const Checkout = props => {
       // console.log(data, "data storage")
       if (data.name) {
         setProfile(data);
-        setAddress({...address, address: data.address})
       } else props.navigation.replace('Login');
     } catch (error) {
       setProfile({});
-    }finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
     if (isFocused) {
-      props.getProvinceList();
+      if (props.provinceList.length == 0) props.getProvinceList();
       getDataUser();
+      if (props.courierList.length == 0) props.getCourierList();
     }
   }, [isFocused]);
   useEffect(() => {
     if (profile.province_id) {
-      props.getCityList(profile.province_id);
+      if (
+        props.cityList.length == 0 &&
+        props.provinceSelected != profile.province_id
+      )
+        props.getCityList(profile.province_id);
     }
   }, [profile.province_id]);
-  // tambahkan loading overlay saat loading province dan city disini dan edit profile dan profile
   useEffect(() => {
-    if (props.provinceList.length != 0) {
-      let province = props.provinceList.find(e => e.province_id == profile.province_id)
-      if(province) province = province.province;
-      setAddress({...address, province})
+    if (props.provinceList.length != 0 && profile.province_id) {
+      let province = props.provinceList.find(
+        e => e.province_id == profile.province_id,
+      );
+      if (province) province = province.province;
+      setProvince(province);
     }
   }, [profile.province_id, props.provinceList]);
   useEffect(() => {
     if (props.cityList.length != 0) {
       let city = props.cityList.find(e => e.city_id == profile.city_id);
       if (city) city = `${city.type} ${city.city_name}`;
-      setAddress({...address, city});
+      setCity(city);
     }
   }, [profile.city_id, props.cityList]);
+  const submit = () => {
+    if(courierSelected && courierSelected.id){
+      // alert(JSON.stringify(courierSelected))
+    }else{
+      alert("Sialakan Pilih Jasa Expedisi")
+    }
+  }
   return (
     <View style={styles.page}>
       <ScrollView style={styles.container}>
         <Spinner
-          visible={loading || props.loadingProvince || props.loadingCity}
+          visible={
+            loading ||
+            props.loadingProvince ||
+            props.loadingCity ||
+            props.loadingCourier
+          }
           textContent={'Loading...'}
           textStyle={styles.spinnerTextStyle}
           color={colors.primary}
         />
-        {/* <Text>{JSON.stringify(profile)}</Text> */}
         {/* <Text>{JSON.stringify(props.route.params)}</Text> */}
         <Text style={styles.textBold}>Apakah Benar Alamat Ini ?</Text>
-        <CardAddress {...props} profile={address} />
+        <CardAddress
+          {...props}
+          profile={{address: profile.address, province, city}}
+        />
         <View style={styles.totalPrice1}>
           <Text style={styles.textBold}>Total Harga:</Text>
           <Text style={styles.textBold}>
             Rp. {numberWithCommas(total_price)}
           </Text>
         </View>
-        <Picker options={[]} label="Pilih Expedisi:" />
+        <Picker
+          options={props.courierList}
+          label="Pilih Expedisi:"
+          type="courier"
+          value={courierSelected}
+          onChange={value => setCourierSelected(value)}
+        />
         <Distance height={10} />
         <Text style={styles.textBold}>Biaya Ongkir</Text>
         <Distance height={10} />
@@ -110,7 +141,7 @@ const Checkout = props => {
           title="Checkout"
           padding={responsiveHeight(17)}
           fontSize={18}
-          onPress={() => props.navigation.navigate('Checkout')}
+          onPress={() => submit()}
         />
       </View>
     </View>
@@ -120,13 +151,20 @@ const mapStateToProps = state => ({
   provinceList: state.rajaOngkirReducer.getProvinceData,
   loadingProvince: state.rajaOngkirReducer.getProvinceLoading,
   errorProvince: state.rajaOngkirReducer.getProvinceError,
+  provinceSelected: state.rajaOngkirReducer.provinceSelected,
+
   cityList: state.rajaOngkirReducer.getCityData,
   loadingCity: state.rajaOngkirReducer.getCityLoading,
   errorCity: state.rajaOngkirReducer.getCityError,
+
+  courierList: state.rajaOngkirReducer.getCouriesData,
+  loadingCourier: state.rajaOngkirReducer.getCouriesLoading,
+  errorCourier: state.rajaOngkirReducer.getCouriesError,
 });
 const mapStateToDispatch = dispatch => ({
   getProvinceList: () => dispatch(getProvinceList()),
   getCityList: province_id => dispatch(getCityList(province_id)),
+  getCourierList: () => dispatch(getCourierList()),
 });
 export default connect(mapStateToProps, mapStateToDispatch)(Checkout);
 

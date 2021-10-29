@@ -39,10 +39,10 @@ const EditProfile = props => {
     }
   };
   useEffect(() => {
-    if(!dataUser.uid){
+    if (!dataUser.uid) {
       getDataUser();
     }
-    props.getProvinceList();
+    if (props.provinceList.length == 0) props.getProvinceList();
   }, []);
   useEffect(() => {
     console.log(updateProfileData, 'updateProfileData');
@@ -55,7 +55,8 @@ const EditProfile = props => {
   }, [updateProfileData]);
   useEffect(() => {
     if (dataUser.province_id) {
-      props.getCityList(dataUser.province_id);
+      if (props.cityList.length == 0 && props.provinceSelected != dataUser.province_id)
+        props.getCityList(dataUser.province_id);
     }
   }, [dataUser.province_id]);
   const getImage = () => {
@@ -176,6 +177,8 @@ const EditProfile = props => {
 const mapStateToProps = state => ({
   provinceList: state.rajaOngkirReducer.getProvinceData,
   loadingProvince: state.rajaOngkirReducer.getProvinceLoading,
+  provinceSelected: state.rajaOngkirReducer.provinceSelected,
+
   cityList: state.rajaOngkirReducer.getCityData,
   loadingCity: state.rajaOngkirReducer.getCityLoading,
   updateProfileData: state.updateProfileReducer.updateProfileData,
@@ -190,6 +193,9 @@ const mapStateToDispatch = dispatch => ({
 export default connect(mapStateToProps, mapStateToDispatch)(EditProfile);
 
 const styles = StyleSheet.create({
+  spinnerTextStyle: {
+    color: colors.primary,
+  },
   page: {
     flex: 1,
     backgroundColor: 'white',

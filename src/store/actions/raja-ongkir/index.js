@@ -9,8 +9,11 @@ import {
   URL_MIDTRANS_STATUS_API,
 } from '@env';
 // import {API_HEADER_RAJAONGKIR_COST} from '../../../utils';
+import FIREBASE from '../../../config/FIREBASE';
 export const GET_PROVINCES = 'GET_PROVINCES';
 export const GET_CITIES = 'GET_CITIES';
+export const PROVINCE_SELECTED = 'PROVINCE_SELECTED';
+export const GET_COURIERS = 'GET_COURIERS';
 import {dispatchLoading, dispatchSuccess, dispatchError} from '../../../utils';
 export function getProvinceList() {
   return (dispatch, getState) => {
@@ -36,7 +39,7 @@ export function getProvinceList() {
       })
       .catch(error => {
         // console.log("error catch")
-        dispatchError(dispatch, REGISTER_USER, JSON.stringify(error), []);
+        dispatchError(dispatch, GET_PROVINCES, JSON.stringify(error), []);
         alert(JSON.stringify(error));
       });
   };
@@ -45,6 +48,12 @@ export function getCityList(province_id) {
   return (dispatch, getState) => {
     console.log('action get City', API_RAJAONGKIR);
     dispatchLoading(dispatch, GET_CITIES, []);
+    dispatch({
+      type: PROVINCE_SELECTED,
+      payload: {
+        data: province_id,
+      },
+    });
     axios({
       method: 'GET',
       url: API_RAJAONGKIR + '/city',
@@ -70,6 +79,27 @@ export function getCityList(province_id) {
         // console.log("error catch")
         dispatchError(dispatch, GET_CITIES, JSON.stringify(error), []);
         alert(JSON.stringify(error));
+      });
+  };
+}
+export function getCourierList() {
+  return (dispatch, getState) => {
+    dispatchLoading(dispatch, GET_COURIERS, []);
+    FIREBASE.database()
+      .ref('couriers/')
+      .once('value', querySnapshot => {
+        const response = querySnapshot.val() ? querySnapshot.val() : null;
+        let result = null
+        if(response){
+          result = Object.keys(response).map(e => response[e])
+        }else{
+          result = []
+        }
+        dispatchSuccess(dispatch, GET_COURIERS, result);
+      })
+      .catch(err => {
+        console.log('Error: ', JSON.stringify(err));
+        dispatchError(dispatch, GET_COURIERS, []);
       });
   };
 }

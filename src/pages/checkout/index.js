@@ -11,17 +11,20 @@ import {
 } from '../../utils';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {ButtonComponent, CardAddress, Picker, Distance} from '../../components';
-import {dummyOrders, dummyProfile} from '../../data';
 import {useIsFocused} from '@react-navigation/core';
 import {connect} from 'react-redux';
 import { getProvinceList, getCityList } from '../../store/actions';
+import Spinner from 'react-native-loading-spinner-overlay';
+
 const Checkout = props => {
   const isFocused = useIsFocused();
   const [profile, setProfile] = useState({});
   const [address, setAddress] = useState({});
+  const [loading, setLoading] =useState(false)
   const {total_weight, total_price} = props.route.params;
   const getDataUser = async () => {
     try {
+      setLoading(true);
       const data = await getData('user');
       // console.log(data, "data storage")
       if (data.name) {
@@ -30,6 +33,8 @@ const Checkout = props => {
       } else props.navigation.replace('Login');
     } catch (error) {
       setProfile({});
+    }finally{
+      setLoading(false)
     }
   };
   useEffect(() => {
@@ -43,6 +48,7 @@ const Checkout = props => {
       props.getCityList(profile.province_id);
     }
   }, [profile.province_id]);
+  // tambahkan loading overlay saat loading province dan city disini dan edit profile dan profile
   useEffect(() => {
     if (props.provinceList.length != 0) {
       let province = props.provinceList.find(e => e.province_id == profile.province_id)
@@ -60,6 +66,12 @@ const Checkout = props => {
   return (
     <View style={styles.page}>
       <ScrollView style={styles.container}>
+        <Spinner
+          visible={loading || props.loadingProvince || props.loadingCity}
+          textContent={'Loading...'}
+          textStyle={styles.spinnerTextStyle}
+          color={colors.primary}
+        />
         {/* <Text>{JSON.stringify(profile)}</Text> */}
         {/* <Text>{JSON.stringify(props.route.params)}</Text> */}
         <Text style={styles.textBold}>Apakah Benar Alamat Ini ?</Text>
@@ -90,13 +102,7 @@ const Checkout = props => {
         <View style={styles.totalPrice}>
           <Text style={styles.textBold}>Total Harga:</Text>
           <Text style={styles.textBold}>
-            Rp.{' '}
-            {numberWithCommas(
-              dummyOrders
-                .filter(e => e.status == 'chart')
-                .map(e => e.total_price)
-                .reduce((a, b) => a + b, 0) + 50000,
-            )}
+            Rp. {numberWithCommas(total_price + 50000)}
           </Text>
         </View>
         <ButtonComponent
@@ -112,7 +118,11 @@ const Checkout = props => {
 };
 const mapStateToProps = state => ({
   provinceList: state.rajaOngkirReducer.getProvinceData,
+  loadingProvince: state.rajaOngkirReducer.getProvinceLoading,
+  errorProvince: state.rajaOngkirReducer.getProvinceError,
   cityList: state.rajaOngkirReducer.getCityData,
+  loadingCity: state.rajaOngkirReducer.getCityLoading,
+  errorCity: state.rajaOngkirReducer.getCityError,
 });
 const mapStateToDispatch = dispatch => ({
   getProvinceList: () => dispatch(getProvinceList()),
@@ -121,6 +131,9 @@ const mapStateToDispatch = dispatch => ({
 export default connect(mapStateToProps, mapStateToDispatch)(Checkout);
 
 const styles = StyleSheet.create({
+  spinnerTextStyle: {
+    color: colors.primary,
+  },
   page: {
     backgroundColor: 'white',
     flex: 1,

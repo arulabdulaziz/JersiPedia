@@ -10,11 +10,13 @@ import {
   Keyboard,
   Alert,
 } from 'react-native';
-import {connect, useDispatch} from 'react-redux';
+import {connect} from 'react-redux';
 import {IlustrationRegister2} from '../../assets';
 import {Distance, ButtonComponent, Input, Picker} from '../../components';
 import {responsiveHeight, responsiveWidth, colors, fonts} from '../../utils';
 import {getProvinceList, getCityList, registerUser} from '../../store/actions';
+import Spinner from 'react-native-loading-spinner-overlay';
+
 const Register2 = props => {
   const [provinceSelected, setProvinceSelected] = useState("");
   const [citySelected, setCitySelected] = useState("");
@@ -61,6 +63,12 @@ const Register2 = props => {
   };
   return (
     <View style={styles.page}>
+      <Spinner
+        visible={props.loadingProvince || props.loadingCity}
+        textContent={'Loading...'}
+        textStyle={styles.spinnerTextStyle}
+        color={colors.primary}
+      />
       {/* <Text>{JSON.stringify(props.route.params)}</Text> */}
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -127,7 +135,9 @@ const Register2 = props => {
 };
 const mapStateToProps = state => ({
   provinceList: state.rajaOngkirReducer.getProvinceData,
+  loadingProvince: state.rajaOngkirReducer.getProvinceLoading,
   cityList: state.rajaOngkirReducer.getCityData,
+  loadingCity: state.rajaOngkirReducer.getCityLoading,
   dataUser: state.authReducer.registerData,
   loading: state.authReducer.registerLoading,
   error: state.authReducer.registerError,
@@ -140,6 +150,9 @@ const mapStateToDispatch = dispatch => ({
 export default connect(mapStateToProps, mapStateToDispatch)(Register2);
 
 const styles = StyleSheet.create({
+  spinnerTextStyle: {
+    color: colors.primary,
+  },
   page: {
     flex: 1,
     backgroundColor: 'white',

@@ -8,6 +8,8 @@ import {DefaultUser} from '../../assets';
 import {getProvinceList, getCityList} from '../../store/actions';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {updateProfile} from '../../store/actions';
+import Spinner from 'react-native-loading-spinner-overlay';
+
 const EditProfile = props => {
   const {loading, updateProfileData} = props;
   const [avatarBase64, setAvatarBase64] = useState('');
@@ -21,25 +23,31 @@ const EditProfile = props => {
     city_id: '',
     avatar: '',
   });
+  const [loadingData, setLoadingData] = useState(false);
   const [updateProfile, setUpdateProfile] = useState(updateProfileData);
   const getDataUser = async () => {
     try {
+      setLoadingData(true);
       const data = await getData('user');
       console.log(data, 'data storage');
       if (data.name) setDataUser(data);
       else props.navigation.replace('Login');
     } catch (error) {
       // setDataUser(error);
+    } finally {
+      setLoadingData(false);
     }
   };
   useEffect(() => {
-    getDataUser();
+    if(!dataUser.uid){
+      getDataUser();
+    }
     props.getProvinceList();
   }, []);
   useEffect(() => {
     console.log(updateProfileData, 'updateProfileData');
     if (updateProfileData && updateProfileData != updateProfile) {
-      Alert.alert("Sukses", "Update Profile Sukses")
+      Alert.alert('Sukses', 'Update Profile Sukses');
       props.navigation.replace('MainApp');
     } else if (updateProfileData) {
       setUpdateProfile(updateProfileData);
@@ -91,6 +99,12 @@ const EditProfile = props => {
   return (
     <View style={styles.page}>
       <ScrollView showsVerticalScrollIndicator={false}>
+        <Spinner
+          visible={loadingData || props.loadingProvince || props.loadingCity}
+          textContent={'Loading...'}
+          textStyle={styles.spinnerTextStyle}
+          color={colors.primary}
+        />
         <Input
           label="Nama:"
           value={dataUser.name}
@@ -161,7 +175,9 @@ const EditProfile = props => {
 };
 const mapStateToProps = state => ({
   provinceList: state.rajaOngkirReducer.getProvinceData,
+  loadingProvince: state.rajaOngkirReducer.getProvinceLoading,
   cityList: state.rajaOngkirReducer.getCityData,
+  loadingCity: state.rajaOngkirReducer.getCityLoading,
   updateProfileData: state.updateProfileReducer.updateProfileData,
   loading: state.updateProfileReducer.updateProfileLoading,
   error: state.updateProfileReducer.updateProfileError,

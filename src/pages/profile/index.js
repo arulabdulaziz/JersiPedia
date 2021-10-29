@@ -13,28 +13,42 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import {ListMenu} from '../../components';
 import {DefaultUser} from '../../assets';
 import {getData} from '../../utils';
+import Spinner from 'react-native-loading-spinner-overlay';
+
 const Profile = props => {
   const [profile, setProfile] = useState({});
   const [menus, setMenus] = useState(dummyMenu);
   const isFocused = useIsFocused();
+    const [loading, setLoading] = useState(false);
   const getDataUser = async () => {
     try {
+      setLoading(true);
       const data = await getData('user');
       // console.log(data, "data storage")
       if (data.name) setProfile(data);
       else props.navigation.replace('Login');
     } catch (error) {
       setProfile(error);
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
     if(isFocused){
-      getDataUser();
+      if(!profile.uid){
+        getDataUser();
+      }
     }
   }, [isFocused]);
   return (
     <View style={styles.page}>
       <View style={styles.container}>
+        <Spinner
+          visible={loading}
+          textContent={'Loading...'}
+          textStyle={styles.spinnerTextStyle}
+          color={colors.primary}
+        />
         <Image
           source={profile.avatar ? {uri: profile.avatar} : DefaultUser}
           style={styles.avatar}
@@ -53,6 +67,9 @@ const Profile = props => {
 export default Profile;
 
 const styles = StyleSheet.create({
+  spinnerTextStyle: {
+    color: colors.primary,
+  },
   page: {
     flex: 1,
     backgroundColor: colors.primary,

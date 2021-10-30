@@ -1,31 +1,89 @@
-import React from 'react';
-import {StyleSheet, Text, View, ScrollView, Image} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, Text, View, ScrollView, Image, Alert} from 'react-native';
 import {ButtonComponent, Input} from '../../components';
-import {responsiveHeight, fonts, colors, responsiveWidth} from '../../utils';
-
+import {
+  responsiveHeight,
+  fonts,
+  colors,
+  responsiveWidth,
+  getData,
+} from '../../utils';
+import {connect} from 'react-redux';
 const ChangePassword = props => {
+  const [loading, setLoading] = useState(false);
+  const [password, setPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [newPasswordConfirmation, setNewPasswordConfirmation] = useState('');
+  const submit = () => {
+    if (
+      password.length < 8 ||
+      newPassword.length < 8 ||
+      newPasswordConfirmation.length < 8
+    ) {
+      alert(
+        'Password Lama, Password Baru, Konfirmasi Password Baru Minimal 8 Karakter!',
+      );
+    } else if (newPassword == password) {
+      alert("Password Baru Tidak Boleh Sama Dengan Password Lama!")
+    } else if (newPassword != newPasswordConfirmation) {
+      alert('Password Baru dan Konfirmasi Password Baru Harus Sama!');
+    } else {
+      setLoading(true);
+      getData('user')
+        .then(res => {
+          const payload = {
+            email: res.email,
+            uid: res.uid,
+            password,
+            newPassword,
+          };
+        })
+        .catch(error => {
+          Alert.alert('Error', JSON.stringify(error));
+        })
+        .finally(_ => {
+          setLoading(false);
+        });
+    }
+  };
   return (
     <View style={styles.page}>
       <View>
-        <Input label="Password Lama:" secureTextEntry />
-        <Input label="Password Baru:" secureTextEntry />
-        <Input label="Konfirmasi Password Baru:" secureTextEntry />
+        <Input
+          label="Password Lama:"
+          secureTextEntry
+          value={password}
+          onChangeText={value => setPassword(value)}
+        />
+        <Input
+          label="Password Baru:"
+          secureTextEntry
+          value={newPassword}
+          onChangeText={value => setNewPassword(value)}
+        />
+        <Input
+          label="Konfirmasi Password Baru:"
+          secureTextEntry
+          value={newPasswordConfirmation}
+          onChangeText={value => setNewPasswordConfirmation(value)}
+        />
       </View>
       <View style={styles.buttonSubmit}>
         <ButtonComponent
           padding={responsiveHeight(15)}
+          loading={loading}
           fontSize={18}
           type="text-icon"
           title="Simpan"
           icon="submit"
-          onPress={() => props.navigation.replace('MainApp')}
+          onPress={() => submit()}
         />
       </View>
     </View>
   );
 };
 
-export default ChangePassword;
+export default connect()(ChangePassword);
 
 const styles = StyleSheet.create({
   page: {

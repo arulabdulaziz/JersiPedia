@@ -22,7 +22,10 @@ const Register1 = props => {
   });
   const onContinue = () => {
     const {name, email, phone, password} = dataUser;
-    if(name && email && phone && password){
+    if(password.length < 8){
+      alert("Password Minimal 8 Karakter!")
+    }
+    else if(name && email && phone && password){
       props.navigation.navigate("Register2",dataUser)
     }else{
       Alert.alert("Isi Data Diri!","Nama, Email, No Hp, dan Password harus diisi!")

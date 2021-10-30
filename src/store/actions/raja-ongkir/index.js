@@ -14,6 +14,8 @@ export const GET_PROVINCES = 'GET_PROVINCES';
 export const GET_CITIES = 'GET_CITIES';
 export const PROVINCE_SELECTED = 'PROVINCE_SELECTED';
 export const GET_COURIERS = 'GET_COURIERS';
+export const COURIER_SELECTED = 'COURIER_SELECTED';
+export const GET_SHIPPING_COST = 'GET_SHIPPING_COST';
 import {dispatchLoading, dispatchSuccess, dispatchError} from '../../../utils';
 export function getProvinceList() {
   return (dispatch, getState) => {
@@ -21,7 +23,7 @@ export function getProvinceList() {
     dispatchLoading(dispatch, GET_PROVINCES, []);
     axios({
       method: 'GET',
-      url: API_RAJAONGKIR + '/province',
+      url: API_RAJAONGKIR + 'province',
       timeout: +API_TIMEOUT,
       headers: {
         key: API_KEY,
@@ -56,7 +58,7 @@ export function getCityList(province_id) {
     });
     axios({
       method: 'GET',
-      url: API_RAJAONGKIR + '/city',
+      url: API_RAJAONGKIR + 'city',
       timeout: +API_TIMEOUT,
       headers: {
         key: API_KEY,
@@ -89,11 +91,11 @@ export function getCourierList() {
       .ref('couriers/')
       .once('value', querySnapshot => {
         const response = querySnapshot.val() ? querySnapshot.val() : null;
-        let result = null
-        if(response){
-          result = Object.keys(response).map(e => response[e])
-        }else{
-          result = []
+        let result = null;
+        if (response) {
+          result = Object.keys(response).map(e => response[e]);
+        } else {
+          result = [];
         }
         dispatchSuccess(dispatch, GET_COURIERS, result);
       })
@@ -103,3 +105,57 @@ export function getCourierList() {
       });
   };
 }
+export function getShippingCost(data, courier) {
+  return (dispatch, getState) => {
+    dispatchLoading(dispatch, GET_SHIPPING_COST, null);
+
+    const formData = new URLSearchParams();
+    const weight = +data.total_weight < 1 ? 1000 : +data.total_weight * 1000;
+    formData.append('weight', weight);
+    formData.append('origin', +ORIGIN_CITY_ID);
+    formData.append('destination', data.profile.city_id);
+    formData.append('courier', courier.courier);
+    axios({
+      method: 'POST',
+      url: API_RAJAONGKIR + 'cost',
+      timeout: +API_TIMEOUT,
+      headers: {
+        key: API_KEY,
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+      data: formData,
+    })
+      .then(response => {
+        // console.log("response")
+        if (response.status != 200) throw response;
+        const shippingCosts = response.data
+          ? response.data.rajaongkir.results[0].costs
+          : [];
+        const selectedShippingCost = shippingCosts
+          .filter(e => e.service == courier.service)
+          .map(e => ({...e, cost: e.cost[0]}))[0];
+        dispatchSuccess(
+          dispatch,
+          GET_SHIPPING_COST,
+          selectedShippingCost.length == 0 ? null : selectedShippingCost,
+        );
+      })
+      .catch(error => {
+        // console.log("error catch")
+        dispatchError(dispatch, GET_SHIPPING_COST, JSON.stringify(error), null);
+        alert(JSON.stringify(error));
+      });
+  };
+}
+export const resetShippingCost = () => {
+  return dispatch => {
+    dispatch({
+      type: GET_SHIPPING_COST,
+      payload: {
+        data: null,
+        loading: false,
+        error: '',
+      },
+    });
+  };
+};

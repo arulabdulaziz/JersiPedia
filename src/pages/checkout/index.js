@@ -17,6 +17,8 @@ import {
   getProvinceList,
   getCityList,
   getCourierList,
+  getShippingCost,
+  resetShippingCost,
 } from '../../store/actions';
 import Spinner from 'react-native-loading-spinner-overlay';
 
@@ -25,7 +27,7 @@ const Checkout = props => {
   const [profile, setProfile] = useState({});
   const [province, setProvince] = useState('');
   const [city, setCity] = useState('');
-  const [courierSelected, setCourierSelected] = useState(null)
+  const [courierSelected, setCourierSelected] = useState(null);
   const [loading, setLoading] = useState(false);
   const {total_weight, total_price} = props.route.params;
   const getDataUser = async () => {
@@ -43,12 +45,22 @@ const Checkout = props => {
     }
   };
   useEffect(() => {
+    props.resetShippingCost();
     if (isFocused) {
       if (props.provinceList.length == 0) props.getProvinceList();
       getDataUser();
       if (props.courierList.length == 0) props.getCourierList();
     }
   }, [isFocused]);
+  useEffect(() => {
+    if (courierSelected && courierSelected.id) {
+      const data = {
+        total_weight,
+        profile,
+      };
+      props.getShippingCost(data, courierSelected);
+    }
+  }, [courierSelected]);
   useEffect(() => {
     if (profile.province_id) {
       if (
@@ -75,12 +87,11 @@ const Checkout = props => {
     }
   }, [profile.city_id, props.cityList]);
   const submit = () => {
-    if(courierSelected && courierSelected.id){
-      // alert(JSON.stringify(courierSelected))
-    }else{
-      alert("Sialakan Pilih Jasa Expedisi")
+    if (courierSelected && courierSelected.id) {
+    } else {
+      alert('Sialakan Pilih Jasa Expedisi');
     }
-  }
+  };
   return (
     <View style={styles.page}>
       <ScrollView style={styles.container}>
@@ -89,13 +100,14 @@ const Checkout = props => {
             loading ||
             props.loadingProvince ||
             props.loadingCity ||
-            props.loadingCourier
+            props.loadingCourier ||
+            props.shippingCostLoading
           }
           textContent={'Loading...'}
           textStyle={styles.spinnerTextStyle}
           color={colors.primary}
         />
-        {/* <Text>{JSON.stringify(props.route.params)}</Text> */}
+        {/* <Text>{JSON.stringify(props.shippingCostData)}</Text> */}
         <Text style={styles.textBold}>Apakah Benar Alamat Ini ?</Text>
         <CardAddress
           {...props}
@@ -121,19 +133,32 @@ const Checkout = props => {
           <Text style={styles.text}>
             Untuk Berat: {numberWithCommas(total_weight)} kg
           </Text>
-          <Text style={styles.textBold}>Rp. {numberWithCommas(50000)}</Text>
+          <Text style={styles.textBold}>
+            Rp.{' '}
+            {numberWithCommas(Number(props.shippingCostData?.cost?.value ?? 0))}
+          </Text>
         </View>
         <Distance height={5} />
         <View style={styles.shipping}>
           <Text style={styles.text}>Estimasi Waktu</Text>
-          <Text style={styles.textBold}>2-3 Hari</Text>
+          <Text style={styles.textBold}>
+            {props.shippingCostData
+              ? `${(props.shippingCostData?.cost?.etd ?? '')
+                  .replace('HARI', '')
+                  .replace('Hari', '')
+                  .replace('hari', '')} Hari`
+              : '-'}
+          </Text>
         </View>
       </ScrollView>
       <View style={styles.footer}>
         <View style={styles.totalPrice}>
           <Text style={styles.textBold}>Total Harga:</Text>
           <Text style={styles.textBold}>
-            Rp. {numberWithCommas(total_price + 50000)}
+            Rp.{' '}
+            {numberWithCommas(
+              total_price + Number(props.shippingCostData?.cost?.value ?? 0),
+            )}
           </Text>
         </View>
         <ButtonComponent
@@ -160,11 +185,17 @@ const mapStateToProps = state => ({
   courierList: state.rajaOngkirReducer.getCouriesData,
   loadingCourier: state.rajaOngkirReducer.getCouriesLoading,
   errorCourier: state.rajaOngkirReducer.getCouriesError,
+
+  shippingCostData: state.rajaOngkirReducer.getShippingCostData,
+  shippingCostLoading: state.rajaOngkirReducer.getShippingCostLoading,
+  shippingCostError: state.rajaOngkirReducer.getShippingCostError,
 });
 const mapStateToDispatch = dispatch => ({
   getProvinceList: () => dispatch(getProvinceList()),
   getCityList: province_id => dispatch(getCityList(province_id)),
   getCourierList: () => dispatch(getCourierList()),
+  getShippingCost: (data, courier) => dispatch(getShippingCost(data, courier)),
+  resetShippingCost: () => dispatch(resetShippingCost()),
 });
 export default connect(mapStateToProps, mapStateToDispatch)(Checkout);
 

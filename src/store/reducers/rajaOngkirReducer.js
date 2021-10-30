@@ -3,6 +3,8 @@ import {
   GET_CITIES,
   PROVINCE_SELECTED,
   GET_COURIERS,
+  COURIER_SELECTED,
+  GET_SHIPPING_COST
 } from '../actions';
 
 const initialState = {
@@ -18,7 +20,13 @@ const initialState = {
 
   getCouriesData: [],
   getCouriesLoading: false,
-  getCouriesError: "",
+  getCouriesError: '',
+
+  courierSelected: '',
+
+  getShippingCostData: null,
+  getShippingCostLoading: false,
+  getShippingCostError: '',
 };
 function rajaOngkirReducer(state = initialState, action) {
   switch (action.type) {
@@ -50,6 +58,18 @@ function rajaOngkirReducer(state = initialState, action) {
         getCouriesData: action.payload.data,
         getCouriesLoading: action.payload.loading,
         getCouriesError: action.payload.errorMessage,
+      };
+    case COURIER_SELECTED:
+      return {
+        ...state,
+        courierSelected: action.payload.data,
+      };
+    case GET_SHIPPING_COST:
+      return {
+        ...state,
+        getShippingCostData: action.payload.data,
+        getShippingCostLoading: action.payload.loading,
+        getShippingCostError: action.payload.errorMessage,
       };
     default:
       return state;

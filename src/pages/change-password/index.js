@@ -9,6 +9,7 @@ import {
   getData,
 } from '../../utils';
 import {connect} from 'react-redux';
+import FIREBASE from '../../config/FIREBASE';
 const ChangePassword = props => {
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState('');
@@ -24,22 +25,36 @@ const ChangePassword = props => {
         'Password Lama, Password Baru, Konfirmasi Password Baru Minimal 8 Karakter!',
       );
     } else if (newPassword == password) {
-      alert("Password Baru Tidak Boleh Sama Dengan Password Lama!")
+      alert('Password Baru Tidak Boleh Sama Dengan Password Lama!');
     } else if (newPassword != newPasswordConfirmation) {
       alert('Password Baru dan Konfirmasi Password Baru Harus Sama!');
     } else {
       setLoading(true);
+      const payload = {
+        password,
+        newPassword,
+      };
       getData('user')
         .then(res => {
-          const payload = {
-            email: res.email,
-            uid: res.uid,
-            password,
-            newPassword,
-          };
+          payload.email = res.email
+          return FIREBASE.auth().signInWithEmailAndPassword(
+            payload.email,
+            payload.password,
+          );
+        })
+        .then(response => {
+          //jika sukses maka update password
+          FIREBASE.auth().currentUser.updatePassword(payload.newPassword);
+        })
+        .then(function () {
+          // Update successful.
+          props.navigation.replace("MainApp")
+          Alert.alert('Sukses', 'Sukses Mengganti Password');
         })
         .catch(error => {
-          Alert.alert('Error', JSON.stringify(error));
+          const errorMessage = error?.message;
+          if (errorMessage) Alert.alert('Error', error.message);
+          else Alert.alert('Error', JSON.stringify(error));
         })
         .finally(_ => {
           setLoading(false);

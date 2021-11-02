@@ -27,7 +27,7 @@ export const getListJersey = () => {
         })
         .catch(err => {
           console.log('Error: ', JSON.stringify(err));
-          dispatchError(dispatch, GET_LIST_JERSEY, null);
+          dispatchError(dispatch, GET_LIST_JERSEY, JSON.stringify(err), null);
         });
     } else if (keyword) {
       console.log('keyword', keyword);
@@ -44,7 +44,7 @@ export const getListJersey = () => {
         })
         .catch(err => {
           console.log('Error: ', JSON.stringify(err));
-          dispatchError(dispatch, GET_LIST_JERSEY, null);
+          dispatchError(dispatch, GET_LIST_JERSEY, JSON.stringify(err), null);
         });
     } else {
       FIREBASE.database()
@@ -56,7 +56,7 @@ export const getListJersey = () => {
         })
         .catch(err => {
           console.log('Error: ', JSON.stringify(err));
-          dispatchError(dispatch, GET_LIST_JERSEY, null);
+          dispatchError(dispatch, GET_LIST_JERSEY, JSON.stringify(err), null);
         });
     }
   };
@@ -76,7 +76,7 @@ export const getListJerseyLimited = () => {
       })
       .catch(err => {
         console.log('Error: ', JSON.stringify(err));
-        dispatchError(dispatch, GET_LIST_JERSEY, null);
+        dispatchError(dispatch, GET_LIST_JERSEY,JSON.stringify(err), null);
       });
   };
 };

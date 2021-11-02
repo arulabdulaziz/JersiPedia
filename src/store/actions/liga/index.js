@@ -20,7 +20,7 @@ export const getListLiga = () => {
       })
       .catch(err => {
         console.log('Error: ', JSON.stringify(err));
-        dispatchError(dispatch, GET_LIST_LIGA, null);
+        dispatchError(dispatch, GET_LIST_LIGA, JSON.stringify(err), null);
       });
   };
 };
@@ -39,7 +39,7 @@ export const getDetailLiga = id => {
       })
       .catch(err => {
         console.log('Error: ', JSON.stringify(err));
-        dispatchError(dispatch, GET_DETAIL_LIGA, null);
+        dispatchError(dispatch, GET_DETAIL_LIGA, JSON.stringify(err), null);
       });
   };
 };

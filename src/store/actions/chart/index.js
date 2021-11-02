@@ -87,7 +87,7 @@ export const addChartDetail = data => {
         dispatchSuccess(dispatch, GET_LIST_CHART, newChart);
       })
       .catch(error => {
-        dispatchError(dispatch, ADD_TO_CHART, error, []);
+        dispatchError(dispatch, ADD_TO_CHART, JSON.stringify(error), []);
         alert(error);
       });
   };
@@ -114,7 +114,7 @@ export const getListChart = id => {
       })
       .catch(err => {
         console.log('Error: ', JSON.stringify(err));
-        dispatchError(dispatch, GET_LIST_CHART, null);
+        dispatchError(dispatch, GET_LIST_CHART, JSON.stringify(err), null);
       });
   };
 };

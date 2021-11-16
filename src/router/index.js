@@ -16,6 +16,7 @@ import {
   Login,
   Register1,
   Register2,
+  Midtrans,
 } from '../pages';
 
 const Stack = createNativeStackNavigator();
@@ -96,6 +97,11 @@ const Router = () => {
         component={Register2}
         name="Register2"
         options={{headerShown: false, title: 'Register2'}}
+      />
+      <Stack.Screen
+        component={Midtrans}
+        name="Midtrans"
+        options={{title: 'Lanjutkan Pembayaran'}}
       />
     </Stack.Navigator>
   );

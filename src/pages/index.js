@@ -10,6 +10,7 @@ import ChangePassword from './change-password';
 import History from './history';
 import Login from './login';
 import { Register1, Register2 } from './register';
+import Midtrans from './midtrans';
 export {
   Home,
   Splash,
@@ -24,4 +25,5 @@ export {
   Login,
   Register1,
   Register2,
+  Midtrans,
 };

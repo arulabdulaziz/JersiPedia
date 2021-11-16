@@ -95,9 +95,9 @@ const Checkout = props => {
       setLoading(true);
 
       let date = new Date().toISOString();
-      const dateFront = date.split("T")[0]
-      const dateBack = date.split("T")[1].split(".")[0]
-      date = `${dateFront}/${dateBack}`
+      const dateFront = date.split('T')[0];
+      const dateBack = date.split('T')[1].split('.')[0];
+      date = `${dateFront}|${dateBack}`;
       const data = {
         transaction_details: {
           order_id: 'T-' + date + '-' + profile.uid,
@@ -122,15 +122,26 @@ const Checkout = props => {
         timeout: +API_TIMEOUT,
       })
         .then(res => {
-          alert(JSON.stringify(res)+"<<<<<<<<<<");
+          // console.log(JSON.stringify(res.data)+"<<<<<<<<<<");
+          const params = {
+            shipping_cost: Number(props.shippingCostData?.cost?.value ?? 0),
+            url: res.data.redirect_url,
+            estimation: props.shippingCostData?.cost?.etd ?? '',
+            order_id: data.transaction_details.order_id,
+            uid: profile.uid,
+            courier: courierSelected,
+          };
+          // console.log(params, "params")
+          props.navigation.push('Midtrans', params);
         })
         .catch(err => {
-          console.log(JSON.stringify(err))
-          console.log("+++++++++")
+          console.log(JSON.stringify(err));
+          console.log('+++++++++');
           const errorMessage = err.message ? err.message : JSON.stringify(err);
           Alert.alert('Error', errorMessage);
-        }).finally(_ => {
-          setLoading(false)
+        })
+        .finally(_ => {
+          setLoading(false);
         });
     } else {
       alert('Sialakan Pilih Jasa Expedisi');

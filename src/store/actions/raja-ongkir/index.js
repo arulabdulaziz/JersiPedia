@@ -126,19 +126,22 @@ export function getShippingCost(data, courier) {
       data: formData,
     })
       .then(response => {
-        // console.log("response")
+        // console.log("response", JSON.stringify(response.status))
         if (response.status != 200) throw response;
         const shippingCosts = response.data
           ? response.data.rajaongkir.results[0].costs
           : [];
+        // console.log(shippingCosts[0], '<<<vv');
         const selectedShippingCost = shippingCosts
           .filter(e => e.service == courier.service)
-          .map(e => ({...e, cost: e.cost[0]}))[0];
+          .map(e => ({...e, cost: e.cost[0]}));
+        // console.log('map', selectedShippingCost);
         dispatchSuccess(
           dispatch,
           GET_SHIPPING_COST,
-          selectedShippingCost.length == 0 ? null : selectedShippingCost,
+          selectedShippingCost.length == 0 ? null : selectedShippingCost[0],
         );
+        // console.log('map2');
       })
       .catch(error => {
         // console.log("error catch")

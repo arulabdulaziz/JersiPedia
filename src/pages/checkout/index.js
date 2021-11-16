@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Alert} from 'react-native';
 import {
   fonts,
   colors,
@@ -8,6 +8,10 @@ import {
   responsiveHeight,
   responsiveWidth,
   getData,
+  HEADER_MIDTRANS,
+  URL_MIDTRANS,
+  URL_MIDTRANS_STATUS,
+  API_TIMEOUT,
 } from '../../utils';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {ButtonComponent, CardAddress, Picker, Distance} from '../../components';
@@ -21,7 +25,7 @@ import {
   resetShippingCost,
 } from '../../store/actions';
 import Spinner from 'react-native-loading-spinner-overlay';
-
+import axios from 'axios';
 const Checkout = props => {
   const isFocused = useIsFocused();
   const [profile, setProfile] = useState({});
@@ -88,6 +92,46 @@ const Checkout = props => {
   }, [profile.city_id, props.cityList]);
   const submit = () => {
     if (courierSelected && courierSelected.id) {
+      setLoading(true);
+
+      let date = new Date().toISOString();
+      const dateFront = date.split("T")[0]
+      const dateBack = date.split("T")[1].split(".")[0]
+      date = `${dateFront}/${dateBack}`
+      const data = {
+        transaction_details: {
+          order_id: 'T-' + date + '-' + profile.uid,
+          gross_amount: parseInt(
+            total_price + Number(props.shippingCostData?.cost?.value ?? 0),
+          ),
+        },
+        credit_card: {
+          secure: true,
+        },
+        customer_details: {
+          first_name: profile.name,
+          email: profile.email,
+          phone: profile.phone,
+        },
+      };
+      axios({
+        method: 'POST',
+        url: URL_MIDTRANS + 'transactions',
+        headers: HEADER_MIDTRANS,
+        data: data,
+        timeout: +API_TIMEOUT,
+      })
+        .then(res => {
+          alert(JSON.stringify(res)+"<<<<<<<<<<");
+        })
+        .catch(err => {
+          console.log(JSON.stringify(err))
+          console.log("+++++++++")
+          const errorMessage = err.message ? err.message : JSON.stringify(err);
+          Alert.alert('Error', errorMessage);
+        }).finally(_ => {
+          setLoading(false)
+        });
     } else {
       alert('Sialakan Pilih Jasa Expedisi');
     }
@@ -162,6 +206,7 @@ const Checkout = props => {
           </Text>
         </View>
         <ButtonComponent
+          loading={loading}
           type="text-icon"
           title="Checkout"
           padding={responsiveHeight(17)}

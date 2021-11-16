@@ -19,7 +19,7 @@ export const API_HEADER_RAJAONGKIR_COST = {
 export const HEADER_MIDTRANS = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
-  Authorization: `Basic ${API_KEY}`,
+  Authorization: `Basic ${API_TOKEN}`,
 };
 export const URL_MIDTRANS = URL_MIDTRANS_API;
 export const URL_MIDTRANS_STATUS = URL_MIDTRANS_STATUS_API;

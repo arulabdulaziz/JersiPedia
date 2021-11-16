@@ -6,7 +6,11 @@ import {fonts, colors, responsiveHeight} from '../../utils';
 import {ButtonComponent} from '../../components';
 import {Slider1, Slider2} from '../../assets';
 import {connect} from 'react-redux';
-import {getListLiga, getListJerseyLimited, setJerseyType} from '../../store/actions';
+import {
+  getListLiga,
+  getListJerseyLimited,
+  setJerseyType,
+} from '../../store/actions';
 import {useIsFocused} from '@react-navigation/native';
 
 const Home = props => {

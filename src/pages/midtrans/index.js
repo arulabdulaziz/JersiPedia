@@ -6,7 +6,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import {colors} from '../../utils';
 const Midtrans = props => {
   const [loading, setLoading] = useState(false);
-  const {shipping_cost, url, estimation, order_id, uid, courier} = props.route.params;
+  const {shipping_cost, url, estimation, order_id, uid, courier, date} = props.route.params;
   const updateOrder = async () => {
     try {
       setLoading(true);
@@ -24,6 +24,7 @@ const Midtrans = props => {
         user: uid,
         courier,
         status: 'pending',
+        date,
       };
       await FIREBASE.database()
         .ref('charts/' + uid)

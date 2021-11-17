@@ -7,11 +7,13 @@ import {
   numberWithCommas,
   responsiveHeight,
   responsiveWidth,
+  formatDateToCreateId,
   getData,
   HEADER_MIDTRANS,
   URL_MIDTRANS,
   URL_MIDTRANS_STATUS,
   API_TIMEOUT,
+  formatDateToSaveDb,
 } from '../../utils';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {ButtonComponent, CardAddress, Picker, Distance} from '../../components';
@@ -26,6 +28,7 @@ import {
 } from '../../store/actions';
 import Spinner from 'react-native-loading-spinner-overlay';
 import axios from 'axios';
+import moment from 'moment';
 const Checkout = props => {
   const isFocused = useIsFocused();
   const [profile, setProfile] = useState({});
@@ -94,13 +97,15 @@ const Checkout = props => {
     if (courierSelected && courierSelected.id) {
       setLoading(true);
 
-      let date = new Date().toISOString();
-      const dateFront = date.split('T')[0];
-      const dateBack = date.split('T')[1].split('.')[0];
-      date = `${dateFront}|${dateBack}`;
+      // let date = new Date().toISOString();
+      // const dateFront = date.split('T')[0];
+      // const dateBack = date.split('T')[1].split('.')[0];
+      // date = `${dateFront}|${dateBack}`;
+      const dateToId = moment().format(formatDateToCreateId);
+      const dateToDb = moment().format(formatDateToSaveDb);
       const data = {
         transaction_details: {
-          order_id: 'T-' + date + '-' + profile.uid,
+          order_id: 'T-' + dateToId + '-' + profile.uid,
           gross_amount: parseInt(
             total_price + Number(props.shippingCostData?.cost?.value ?? 0),
           ),
@@ -130,6 +135,7 @@ const Checkout = props => {
             order_id: data.transaction_details.order_id,
             uid: profile.uid,
             courier: courierSelected,
+            date: dateToDb,
           };
           // console.log(params, "params")
           props.navigation.push('Midtrans', params);

@@ -1,9 +1,10 @@
 import FIREBASE from '../../../config/FIREBASE';
-import {dispatchLoading, dispatchSuccess, dispatchError} from '../../../utils';
+import {dispatchLoading, dispatchSuccess, dispatchError, formatDateToSaveDb} from '../../../utils';
 import Snackbar from 'react-native-snackbar';
 export const ADD_TO_CHART = 'ADD_TO_CHART';
 export const GET_LIST_CHART = 'GET_LIST_CHART';
 export const LOADING_DELETE_CHART = 'LOADING_DELETE_CHART';
+import moment from 'moment';
 export const addToChart = data => {
   return dispatch => {
     dispatchLoading(dispatch, ADD_TO_CHART, []);
@@ -38,7 +39,7 @@ export const addToChart = data => {
           //Simpan Keranjang Utama
           const newChart = {
             user: data.uid,
-            date: new Date().toDateString(),
+            date: moment().format(formatDateToSaveDb),
             total_price: parseInt(+data.amount) * parseInt(+data.jersey.price),
             total_weight:
               parseInt(+data.amount) * parseFloat(+data.jersey.weight),
@@ -123,7 +124,7 @@ export const deleteChart = chart => {
     dispatch({type: LOADING_DELETE_CHART, payload: {loading: true}});
     const charts = getState().chartReducer.listChartData;
     const newData = {
-      date: new Date().toDateString(),
+      date: moment().format(formatDateToSaveDb),
       total_price: +charts.total_price - +chart.total_price,
       total_weight: +charts.total_weight - +chart.total_weight,
     };

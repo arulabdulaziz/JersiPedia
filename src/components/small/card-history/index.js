@@ -1,16 +1,27 @@
 import React from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
-import {colors, fonts, responsiveWidth, numberWithCommas} from '../../../utils';
+import {colors, fonts, responsiveWidth, numberWithCommas, fromFormatDate} from '../../../utils';
 import {Distance} from '..';
+import moment from 'moment';
+import 'moment/locale/id';
 const CardHistory = props => {
   const {order} = props;
   return (
     <View style={styles.container}>
-      <Text style={styles.date}>{order.date}</Text>
+      <Text style={styles.date}>
+        {moment(order.date, fromFormatDate)
+          .locale('id')
+          .format('dddd, DD MMMM YYYY')}
+      </Text>
       {order.orders.map((history, index) => (
         <View key={history.id} style={styles.history}>
           <Text>{index + 1}. </Text>
-          <Image source={history.product.images[0]} style={styles.jersey} />
+          <Image
+            source={
+              history.product.image[0] ? {uri: history.product.image[0]} : null
+            }
+            style={styles.jersey}
+          />
           <View style={styles.desc}>
             <Text style={styles.name}>{history.product.name}</Text>
             <Text style={styles.price}>
@@ -22,7 +33,9 @@ const CardHistory = props => {
             </Text>
             <Text style={styles.textBold}>
               Total Harga:{' '}
-              <Text style={styles.text}>{history.total_price}</Text>
+              <Text style={styles.text}>
+                Rp. {numberWithCommas(history.total_price)}
+              </Text>
             </Text>
           </View>
         </View>
@@ -31,16 +44,16 @@ const CardHistory = props => {
       <View style={styles.footer}>
         <View style={styles.label}>
           <Text style={styles.textBlue}>Status: </Text>
-          <Text style={styles.textBlue}>Ongkir (2-3 Hari): </Text>
+          <Text style={styles.textBlue}>Ongkir {order.estimation}: </Text>
           <Text style={styles.textBlue}>Total Harga: </Text>
         </View>
         <View style={styles.label}>
+          <Text style={styles.textBlue}>{order.status.toUpperCase()}</Text>
           <Text style={styles.textBlue}>
-            {order.status == 'chart' ? 'Belum Bayar' : 'LUNAS'}
+            Rp. {numberWithCommas(order.shipping_cost)}{' '}
           </Text>
-          <Text style={styles.textBlue}>Rp. {numberWithCommas(15000)} </Text>
           <Text style={styles.textBlue}>
-            Rp. {numberWithCommas(order.total_price + 15000)}
+            Rp. {numberWithCommas(order.total_price + order.shipping_cost)}
           </Text>
         </View>
       </View>

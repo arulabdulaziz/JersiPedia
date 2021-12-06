@@ -6,7 +6,8 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import {colors} from '../../utils';
 const Midtrans = props => {
   const [loading, setLoading] = useState(false);
-  const {shipping_cost, url, estimation, order_id, uid, courier, date} = props.route.params;
+  const {shipping_cost, url, estimation, order_id, uid, courier, date} =
+    props.route.params;
   const updateOrder = async () => {
     try {
       setLoading(true);
@@ -46,6 +47,11 @@ const Midtrans = props => {
   useEffect(() => {
     updateOrder();
   }, []);
+  const onMessage = data => {
+    if (data.nativeEvent.data === 'done') {
+      props.navigation.replace('History');
+    }
+  };
   return (
     <>
       {loading ? (
@@ -58,7 +64,7 @@ const Midtrans = props => {
           />
         </View>
       ) : (
-        <WebView source={{uri: url}} />
+        <WebView source={{uri: url}} onMessage={onMessage} />
       )}
     </>
   );

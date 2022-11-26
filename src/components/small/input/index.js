@@ -27,6 +27,7 @@ const Input = props => {
           numberOfLines={3}
           placeholder={placeholder ? placeholder : label}
           style={styles.inputTextarea(fontSize)}
+          placeholderTextColor={colors.border}
         />
       </View>
     );
@@ -42,6 +43,7 @@ const Input = props => {
         placeholder={placeholder ? placeholder : label}
         style={styles.input(width, height, fontSize)}
         secureTextEntry={secureTextEntry}
+        placeholderTextColor={colors.border}
       />
     </View>
   );
@@ -67,6 +69,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     fontFamily: fonts.primary.regular,
+    color: 'black',
   }),
   inputTextarea: fontSize => ({
     fontSize: fontSize ? fontSize : 18,
@@ -77,5 +80,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     fontFamily: fonts.primary.regular,
     textAlignVertical: 'top',
+    color: 'black',
   }),
 });

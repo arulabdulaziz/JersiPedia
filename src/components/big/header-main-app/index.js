@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, TextInput} from 'react-native';
+import {StyleSheet, View, TextInput} from 'react-native';
 import {colors, responsiveHeight, fonts, getData} from '../../../utils';
 import {IconSearch} from '../../../assets';
 import {Distance} from '../../small';
@@ -16,7 +16,7 @@ const HeaderMainApp = props => {
     else setSearch('');
   }, [isFocused, props.keyword]);
   useEffect(() => {
-    if(isFocused){
+    if (isFocused) {
       if (props.listChart) {
         if (props.listChart.orders) setNotif(props.listChart.orders.length);
         else setNotif(0);
@@ -25,7 +25,7 @@ const HeaderMainApp = props => {
         getCharts();
       }
     }
-  }, [isFocused,props.listChart]);
+  }, [isFocused, props.listChart]);
   const getCharts = async () => {
     try {
       const user = await getData('user');
@@ -50,6 +50,7 @@ const HeaderMainApp = props => {
           <TextInput
             style={styles.input}
             placeholder="Cari Jersey. . ."
+            placeholderTextColor={colors.border}
             value={search}
             onChangeText={value => setSearch(value)}
             onSubmitEditing={() => finishSearch()}
@@ -97,5 +98,6 @@ const styles = StyleSheet.create({
   input: {
     fontFamily: fonts.primary.regular,
     fontSize: 16,
+    color: 'black'
   },
 });

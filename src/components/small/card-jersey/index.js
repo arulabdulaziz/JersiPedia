@@ -11,7 +11,9 @@ const CardJersey = props => {
           source={jersey.image[0] ? {uri: jersey.image[0]} : ''}
           style={styles.image}
         />
-        <Text style={styles.label}>{jersey.name}</Text>
+        <Text style={styles.label} numberOfLines={4}>
+          {jersey.name}
+        </Text>
       </TouchableOpacity>
       <ButtonComponent
         type="text"
@@ -47,5 +49,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     textTransform: 'capitalize',
     textAlign: 'center',
+    height: responsiveHeight(100)
   },
 });

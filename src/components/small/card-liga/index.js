@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 15,
     marginHorizontal: 10,
+    marginBottom: responsiveHeight(5),
   },
   logo: {
     width: responsiveWidth(57),

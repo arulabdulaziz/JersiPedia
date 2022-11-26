@@ -1,12 +1,15 @@
 import React, {useEffect} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Logo, Ilustration} from '../../assets';
+import SplashScreen from 'react-native-splash-screen';
+
 const Splash = props => {
   const {navigation} = props;
   useEffect(() => {
+    SplashScreen.hide();
     setTimeout(() => {
       navigation.replace('MainApp');
-    }, 2000)
+    }, 2000);
   }, []);
   return (
     <View style={styles.pages}>

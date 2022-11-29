@@ -12,11 +12,11 @@ import {
   Alert,
 } from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
-import {Logo, Ilustration} from '../../assets';
-import {responsiveHeight, colors, fonts, getData} from '../../utils';
-import {Input, ButtonComponent, Distance} from '../../components';
+import {Logo, Ilustration} from '@assets';
+import {responsiveHeight, colors, fonts, getData} from '@utils';
+import {Input, ButtonComponent, Distance} from '@components';
 import {connect, useDispatch} from 'react-redux';
-import {loginUser} from '../../store/actions';
+import {loginUser} from '@store/actions';
 
 const Login = props => {
   const {navigation, loading, dataUser} = props;

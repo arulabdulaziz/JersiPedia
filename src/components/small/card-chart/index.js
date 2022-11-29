@@ -1,16 +1,16 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
-import {IconDelete} from '../../../assets';
+import {IconDelete} from '@assets';
 import {
   colors,
   fonts,
   responsiveWidth,
   responsiveHeight,
   numberWithCommas,
-} from '../../../utils';
+} from '@utils';
 import {Distance} from '..';
 import {connect} from 'react-redux';
-import {deleteChart} from '../../../store/actions';
+import {deleteChart} from '@store/actions';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 const CardChart = props => {

@@ -6,11 +6,11 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
-import {CardLiga} from '../../small';
+import {CardLiga} from '@components/small';
 import {useIsFocused} from '@react-navigation/native';
-import {getListLiga} from '../../../store/actions';
+import {getListLiga} from '@store/actions';
 import {connect} from 'react-redux';
-import {colors, responsiveWidth, widthMobileUI} from '../../../utils';
+import {colors, responsiveWidth, widthMobileUI} from '@utils';
 
 const ListLiga = props => {
   const [ligas, setLigas] = useState([]);

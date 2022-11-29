@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {colors, fonts} from '../../utils';
-import {ListHistory} from '../../components';
+import {colors, fonts} from '@utils';
+import {ListHistory} from '@components';
 const History = props => {
   return (
     <View style={styles.page}>

@@ -1,8 +1,8 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
-import {responsiveHeight, responsiveWidth} from '../../../utils';
+import {responsiveHeight, responsiveWidth} from '@utils';
 import {connect} from 'react-redux';
-import {setLiga, getListJersey, deleteKeyword} from '../../../store/actions';
+import {setLiga, getListJersey, deleteKeyword} from '@store/actions';
 const CardLiga = props => {
   const {liga, navigation, route} = props;
   const toJerseyByLiga = () => {

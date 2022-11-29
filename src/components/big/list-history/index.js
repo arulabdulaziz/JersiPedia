@@ -8,9 +8,9 @@ import {
   Alert,
 } from 'react-native';
 import {CardHistory} from '../..';
-import {colors, getData} from '../../../utils';
+import {colors, getData} from '@utils';
 import Spinner from 'react-native-loading-spinner-overlay';
-import FIREBASE from '../../../config/FIREBASE';
+import FIREBASE from '@config/FIREBASE';
 const ListHistory = props => {
   const [orders, setOrders] = React.useState([]);
   const [refreshing, setRefreshing] = React.useState(false);

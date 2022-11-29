@@ -14,9 +14,9 @@ import {
   URL_MIDTRANS_STATUS,
   API_TIMEOUT,
   formatDateToSaveDb,
-} from '../../utils';
+} from '@utils';
 import {RFValue} from 'react-native-responsive-fontsize';
-import {ButtonComponent, CardAddress, Picker, Distance} from '../../components';
+import {ButtonComponent, CardAddress, Picker, Distance} from '@components';
 import {useIsFocused} from '@react-navigation/core';
 import {connect} from 'react-redux';
 import {
@@ -25,7 +25,7 @@ import {
   getCourierList,
   getShippingCost,
   resetShippingCost,
-} from '../../store/actions';
+} from '@store/actions';
 import Spinner from 'react-native-loading-spinner-overlay';
 import axios from 'axios';
 import moment from 'moment';

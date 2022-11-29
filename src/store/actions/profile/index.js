@@ -1,10 +1,10 @@
-import FIREBASE from '../../../config/FIREBASE';
+import FIREBASE from '@config/FIREBASE';
 import {
   storeData,
   dispatchLoading,
   dispatchSuccess,
   dispatchError,
-} from '../../../utils';
+} from '@utils';
 
 export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 export const updateProfile = data => {

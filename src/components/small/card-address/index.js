@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import {fonts, colors} from '../../../utils';
+import {fonts, colors} from '@utils';
 const CardAddress = ({profile, navigation}) => {
   return (
     <View style={styles.container}>

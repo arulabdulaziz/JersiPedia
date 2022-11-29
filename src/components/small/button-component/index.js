@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import {IconChart, IconBack} from '../../../assets';
+import {IconChart, IconBack} from '@assets';
 import TextIcon from './TextIcon';
 import TextOnly from './TextOnly';
 import TextLoading from './TextLoading';

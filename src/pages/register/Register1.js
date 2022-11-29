@@ -10,9 +10,9 @@ import {
   Keyboard,
   Alert,
 } from 'react-native';
-import {IlustrationRegister1} from '../../assets';
-import {Distance, ButtonComponent, Input} from '../../components';
-import {responsiveHeight, responsiveWidth, colors, fonts} from '../../utils';
+import {IlustrationRegister1} from '@assets';
+import {Distance, ButtonComponent, Input} from '@components';
+import {responsiveHeight, responsiveWidth, colors, fonts} from '@utils';
 const Register1 = props => {
   const [dataUser, setDataUser] = useState({
     name: '',

@@ -1,9 +1,9 @@
-import FIREBASE from '../../../config/FIREBASE';
+import FIREBASE from '@config/FIREBASE';
 import {
   dispatchLoading,
   dispatchSuccess,
   dispatchError,
-} from '../../../utils';
+} from '@utils';
 export const GET_LIST_LIGA = 'GET_LIST_LIGA';
 export const GET_DETAIL_LIGA = 'GET_DETAIL_LIGA';
 export const DELETE_DETAIL_LIGA = 'DELETE_DETAIL_LIGA';

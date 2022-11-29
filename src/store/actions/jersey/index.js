@@ -1,10 +1,10 @@
-import FIREBASE from '../../../config/FIREBASE';
+import FIREBASE from '@config/FIREBASE';
 import {
   storeData,
   dispatchLoading,
   dispatchSuccess,
   dispatchError,
-} from '../../../utils';
+} from '@utils';
 export const GET_LIST_JERSEY = 'GET_LIST_JERSEY';
 export const SET_LIGA = 'SET_LIGA';
 export const DELETE_LIGA = 'DELETE_LIGA';

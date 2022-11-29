@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Logo, Ilustration} from '../../assets';
+import {Logo, Ilustration} from '@src/assets';
 import SplashScreen from 'react-native-splash-screen';
 
 const Splash = props => {

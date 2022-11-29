@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, ScrollView, Image} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 import {
   colors,
@@ -7,19 +7,19 @@ import {
   responsiveHeight,
   responsiveWidth,
   heightMobileUI,
-} from '../../utils';
-import {dummyMenu} from '../../data';
+  getData,
+} from '@utils';
+import {dummyMenu} from '@data';
 import {RFValue} from 'react-native-responsive-fontsize';
-import {ListMenu} from '../../components';
-import {DefaultUser} from '../../assets';
-import {getData} from '../../utils';
+import {ListMenu} from '@components';
+import {DefaultUser} from '@assets';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 const Profile = props => {
   const [profile, setProfile] = useState({});
   const [menus, setMenus] = useState(dummyMenu);
   const isFocused = useIsFocused();
-    const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const getDataUser = async () => {
     try {
       setLoading(true);
@@ -34,8 +34,8 @@ const Profile = props => {
     }
   };
   useEffect(() => {
-    if(isFocused){
-      if(!profile.uid){
+    if (isFocused) {
+      if (!profile.uid) {
         getDataUser();
       }
     }

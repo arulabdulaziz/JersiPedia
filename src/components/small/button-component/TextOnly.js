@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import {colors, fonts} from '../../../utils';
+import {colors, fonts} from '@utils';
 const TextOnly = ({onPress, title, padding, fontSize}) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.container(padding)}>

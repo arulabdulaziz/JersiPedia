@@ -1,5 +1,5 @@
-import FIREBASE from '../../../config/FIREBASE';
-import {dispatchLoading, dispatchSuccess, dispatchError, formatDateToSaveDb} from '../../../utils';
+import FIREBASE from '@config/FIREBASE';
+import {dispatchLoading, dispatchSuccess, dispatchError, formatDateToSaveDb} from '@utils';
 import Snackbar from 'react-native-snackbar';
 export const ADD_TO_CHART = 'ADD_TO_CHART';
 export const GET_LIST_CHART = 'GET_LIST_CHART';

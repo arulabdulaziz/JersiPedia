@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
-import {colors, fonts, responsiveWidth, numberWithCommas, fromFormatDate} from '../../../utils';
+import {colors, fonts, responsiveWidth, numberWithCommas, fromFormatDate} from '@utils';
 import {Distance} from '..';
 import moment from 'moment';
 import 'moment/locale/id';

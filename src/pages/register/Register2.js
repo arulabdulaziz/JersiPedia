@@ -11,10 +11,10 @@ import {
   Alert,
 } from 'react-native';
 import {connect} from 'react-redux';
-import {IlustrationRegister2} from '../../assets';
-import {Distance, ButtonComponent, Input, Picker} from '../../components';
-import {responsiveHeight, responsiveWidth, colors, fonts} from '../../utils';
-import {getProvinceList, getCityList, registerUser} from '../../store/actions';
+import {IlustrationRegister2} from '@assets';
+import {Distance, ButtonComponent, Input, Picker} from '@components';
+import {responsiveHeight, responsiveWidth, colors, fonts} from '@utils';
+import {getProvinceList, getCityList, registerUser} from '@store/actions';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 const Register2 = props => {

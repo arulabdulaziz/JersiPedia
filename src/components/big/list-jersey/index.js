@@ -8,9 +8,9 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {CardJersey, Distance} from '../..';
-import {responsiveHeight} from '../../../utils';
+import {responsiveHeight} from '@utils';
 import {connect} from 'react-redux';
-import {colors} from '../../../utils';
+import {colors} from '@utils';
 const ListJersey = props => {
   const [jerseys, setJerseys] = useState([]);
   const [refreshing, setRefreshing] = useState(false);

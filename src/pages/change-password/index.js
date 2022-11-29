@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View, ScrollView, Image, Alert} from 'react-native';
-import {ButtonComponent, Input} from '../../components';
+import {ButtonComponent, Input} from '@components';
 import {
   responsiveHeight,
   fonts,
   colors,
   responsiveWidth,
   getData,
-} from '../../utils';
+} from '@utils';
 import {connect} from 'react-redux';
-import FIREBASE from '../../config/FIREBASE';
+import FIREBASE from '@config/FIREBASE';
 const ChangePassword = props => {
   const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState('');

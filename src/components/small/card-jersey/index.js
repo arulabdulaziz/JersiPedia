@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
-import {colors, fonts, responsiveWidth, responsiveHeight} from '../../../utils';
+import {colors, fonts, responsiveWidth, responsiveHeight} from '@utils';
 import ButtonComponent from '../button-component';
 const CardJersey = props => {
   const {jersey, onPress} = props;

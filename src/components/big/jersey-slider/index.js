@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Modal} from 'react-native';
 import {SliderBox} from 'react-native-image-slider-box';
-import {responsiveWidth, responsiveHeight, colors} from '../../../utils';
+import {responsiveWidth, responsiveHeight, colors} from '@utils';
 import ImageViewer from 'react-native-image-zoom-viewer';
 const JerseySlider = props => {
   const {images} = props;

@@ -7,7 +7,7 @@ import {
   RefreshControl,
   Alert,
 } from 'react-native';
-import {ListChart, Distance, ButtonComponent} from '../../components';
+import {ListChart, Distance, ButtonComponent} from '@components';
 import {
   colors,
   responsiveHeight,
@@ -15,10 +15,10 @@ import {
   heightMobileUI,
   numberWithCommas,
   getData,
-} from '../../utils';
+} from '@utils';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {connect} from 'react-redux';
-import {getListChart} from '../../store/actions';
+import {getListChart} from '@store/actions';
 import {useIsFocused} from '@react-navigation/core';
 import Snackbar from 'react-native-snackbar';
 

@@ -1,10 +1,10 @@
-import FIREBASE from '../../../config/FIREBASE';
+import FIREBASE from '@config/FIREBASE';
 import {
   storeData,
   dispatchLoading,
   dispatchSuccess,
   dispatchError,
-} from '../../../utils';
+} from '@utils';
 export const REGISTER_USER = 'REGISTER_USER';
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';

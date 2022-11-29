@@ -8,15 +8,15 @@ import {
   URL_MIDTRANS_API,
   URL_MIDTRANS_STATUS_API,
 } from '@env';
-// import {API_HEADER_RAJAONGKIR_COST} from '../../../utils';
-import FIREBASE from '../../../config/FIREBASE';
+// import {API_HEADER_RAJAONGKIR_COST} from '@utils';
+import FIREBASE from '@config/FIREBASE';
 export const GET_PROVINCES = 'GET_PROVINCES';
 export const GET_CITIES = 'GET_CITIES';
 export const PROVINCE_SELECTED = 'PROVINCE_SELECTED';
 export const GET_COURIERS = 'GET_COURIERS';
 export const COURIER_SELECTED = 'COURIER_SELECTED';
 export const GET_SHIPPING_COST = 'GET_SHIPPING_COST';
-import {dispatchLoading, dispatchSuccess, dispatchError} from '../../../utils';
+import {dispatchLoading, dispatchSuccess, dispatchError} from '@utils';
 export function getProvinceList() {
   return (dispatch, getState) => {
     console.log('action get Province', API_RAJAONGKIR);

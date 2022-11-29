@@ -1,13 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {StyleSheet, Text, View, ScrollView, Image, Alert} from 'react-native';
-import {ButtonComponent, Input, Picker} from '../../components';
-import {responsiveHeight, fonts, colors, responsiveWidth} from '../../utils';
-import {getData} from '../../utils';
-import {DefaultUser} from '../../assets';
-import {getProvinceList, getCityList} from '../../store/actions';
+import {ButtonComponent, Input, Picker} from '@components';
+import {
+  responsiveHeight,
+  fonts,
+  colors,
+  responsiveWidth,
+  getData,
+} from '@utils';
+import {DefaultUser} from '@assets';
+import {getProvinceList, getCityList, updateProfile} from '@store/actions';
 import {launchImageLibrary} from 'react-native-image-picker';
-import {updateProfile} from '../../store/actions';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 const EditProfile = props => {
@@ -55,7 +59,10 @@ const EditProfile = props => {
   }, [updateProfileData]);
   useEffect(() => {
     if (dataUser.province_id) {
-      if (props.cityList.length == 0 && props.provinceSelected != dataUser.province_id)
+      if (
+        props.cityList.length == 0 &&
+        props.provinceSelected != dataUser.province_id
+      )
         props.getCityList(dataUser.province_id);
     }
   }, [dataUser.province_id]);

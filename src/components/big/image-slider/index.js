@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import {SliderBox} from 'react-native-image-slider-box';
-import {responsiveWidth, responsiveHeight, colors} from '../../../utils';
-import {Slider1, Slider2} from '../../../assets';
+import {responsiveWidth, responsiveHeight, colors} from '@utils';
+import {Slider1, Slider2} from '@assets';
 const ImageSlider = props => {
   const [images, setImages] = useState([Slider1, Slider2]);
   return (

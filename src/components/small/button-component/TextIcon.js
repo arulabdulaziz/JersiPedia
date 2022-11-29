@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import {colors, fonts} from '../../../utils';
-import {IconChartWhite, IconSubmit} from '../../../assets';
+import {colors, fonts} from '@utils';
+import {IconChartWhite, IconSubmit} from '@assets';
 import {Distance} from '../../';
 const TextIcon = ({onPress, title, padding, fontSize, icon}) => {
   const Icon = () => {

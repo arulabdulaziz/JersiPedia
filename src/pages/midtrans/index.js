@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {Alert, StyleSheet, Text, View} from 'react-native';
 import {WebView} from 'react-native-webview';
-import FIREBASE from '../../config/FIREBASE';
+import FIREBASE from '@config/FIREBASE';
 import Spinner from 'react-native-loading-spinner-overlay';
-import {colors} from '../../utils';
+import {colors} from '@utils';
 const Midtrans = props => {
   const [loading, setLoading] = useState(false);
   const {shipping_cost, url, estimation, order_id, uid, courier, date} =

@@ -7,8 +7,8 @@ import {
   IconJerseyActive,
   IconProfile,
   IconProfileActive,
-} from '../../../assets';
-import {colors, fonts} from '../../../utils';
+} from '@assets';
+import {colors, fonts} from '@utils';
 const TabItem = ({onPress, onLongPress, isFocused, label}) => {
   const Icon = () => {
     switch (label) {

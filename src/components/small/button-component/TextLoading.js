@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import {colors, fonts} from '../../../utils';
+import {colors, fonts} from '@utils';
 import {Distance} from '../../';
 const TextLoading = ({padding, fontSize}) => {
   return (

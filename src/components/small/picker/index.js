@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {fonts, colors, responsiveHeight} from '../../../utils';
+import {fonts, colors, responsiveHeight} from '@utils';
 import {Picker as PickerInput} from '@react-native-picker/picker';
 // GANTI VALUE PROVINCE DAN CITIES DENGAN ID NYA LANGSUNG, TIDAK DENGAN OBJ NY!!!
 const Picker = props => {

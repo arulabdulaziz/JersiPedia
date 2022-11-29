@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, TextInput} from 'react-native';
-import {colors, responsiveHeight, fonts, getData} from '../../../utils';
-import {IconSearch} from '../../../assets';
-import {Distance} from '../../small';
-import {ButtonComponent} from '../../small';
+import {colors, responsiveHeight, fonts, getData} from '@utils';
+import {IconSearch} from '@assets';
+import {Distance} from '@components/small';
+import {ButtonComponent} from '@components/small';
 import {connect} from 'react-redux';
-import {setKeyword, deleteLiga, getListChart} from '../../../store/actions';
+import {setKeyword, deleteLiga, getListChart} from '@store/actions';
 import {useIsFocused} from '@react-navigation/native';
 const HeaderMainApp = props => {
   const isFocused = useIsFocused();

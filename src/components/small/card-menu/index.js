@@ -6,11 +6,11 @@ import {
   responsiveHeight,
   clearStorage,
   getData,
-} from '../../../utils';
-import {IconArrowRight} from '../../../assets';
-import FIREBASE from '../../../config/FIREBASE';
+} from '@utils';
+import {IconArrowRight} from '@assets';
+import FIREBASE from '@config/FIREBASE';
 import {useDispatch} from 'react-redux';
-import {LOGOUT_USER} from '../../../store/actions';
+import {LOGOUT_USER} from '@store/actions';
 const CardMenu = props => {
   const dispatch = useDispatch();
   const {menu, navigation} = props;

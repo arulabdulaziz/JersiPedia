@@ -23,12 +23,12 @@ import {
   Input,
   Picker,
   Distance,
-} from '../../components';
+} from '@components';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useIsFocused} from '@react-navigation/native';
 import {connect} from 'react-redux';
-import {getDetailLiga, deleteDetailLiga, addToChart} from '../../store/actions';
-import {getData} from '../../utils';
+import {getDetailLiga, deleteDetailLiga, addToChart} from '@store/actions';
+import {getData} from '@utils';
 const JerseyDetail = props => {
   const {jersey} = props.route.params;
   const [sizeOptions, setSizeOptions] = useState(['S', 'M', 'L', 'XL', 'XXL']);

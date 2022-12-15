@@ -27,13 +27,11 @@ const Login = props => {
         return;
       }
       if (dataUser) {
-        navigation.replace('MainApp');
-      } else {
-        const storeData = await getData('user');
-        if (storeData.name) {
-          console.log(storeData, 'storage login');
-          navigation.replace('MainApp');
-        }
+        return navigation.replace('MainApp');
+      }
+      const storeData = await getData('user');
+      if (storeData.name) {
+        return navigation.replace('MainApp');
       }
     } catch (error) {
       console.log(error, 'error get storage data');
